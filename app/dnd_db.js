@@ -14,7 +14,7 @@ var express = require('express')
 
 var app = express();    // create the app
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
-var bodyParser = require('bodyParser');
+var bodyParser = require('body-parser');
 
 /* App configuration */
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -27,6 +27,26 @@ app.set('port', 4733);
 
 app.get('/', function(req, res) {
     res.render('home');
+});
+
+app.get('/manageClasses', function(req, res) {
+    res.render('manageClasses');
+});
+
+app.get('/manageSpecials', function(req, res) {
+    res.render('manageSpecials');
+});
+
+app.get('/manageCharacters', function(req, res) {
+    res.render('manageCharacters');
+});
+
+app.get('/managePlayers', function(req, res) {
+    res.render('managePlayers');
+});
+
+app.get('/manageRaces', function(req, res) {
+    res.render('manageRaces');
 });
 
 // Handle 404 messages

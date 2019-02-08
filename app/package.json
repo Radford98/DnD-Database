@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/Aaron-Ennis/cs340-group-project#readme",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "express-handlebars": "^3.0.0"
+    "express-handlebars": "^3.0.0",
+    "forever": "^0.15.3"
   }
 }

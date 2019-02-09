@@ -25,6 +25,10 @@ DELETE FROM player WHERE player_id = :selected_id;
 -- update player
 UPDATE player SET player_first_name = :fname, player_last_name = :lname, dm = :dm WHERE player_id = :selected_id
 
+-- add a new DM to the table
+INSERT INTO player (player_first_name, player_last_name, dm) VALUES ("Jimmy", "john", NULL);
+UPDATE player SET dm = LAST_INSERT_ID() WHERE player_id = LAST_INSERT_ID();
+
 
 -- ------ Manage Characters ------ --
 
@@ -51,3 +55,18 @@ DELETE FROM characters WHERE character_id = :selected_id;
 
 -- display character-class relationship
 SELECT CH.character_name AS "Character", CL.class_name AS "Class", CC.levels AS "Levels", CC.primary_class AS "Primary Class" FROM characters CH INNER JOIN characters_class CC ON CH.character_id = CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id;
+
+-- drop down menu for updating classes that the character already has
+SELECT class_name FROM class C INNER JOIN characters_class CC ON C.class_id = CC.class_id WHERE CC.character_id = :selected_id;
+
+-- update character levels
+UPDATE characters_class SET levels = (levels+:value) WHERE character_id = :selected_character_id AND class_id = :selected_class_id;
+
+-- drop down menu for adding new classes to a character
+SELECT class_name FROM class WHERE class_id NOT IN (SELECT C.class_id FROM class C INNER JOIN characters_class CC ON C.class_id = CC.class_id WHERE CC.character_id = :selected_id);
+
+-- add new class levels to a character
+INSERT INTO characters_class (character_id, class_id, levels) VALUES (:selected_character_id, :selected_class_id, :levels);
+
+-- delete a class from a character
+DELETE FROM characters_class WHERE character_id = :selected_character_id AND class_id = :selected_class_id;

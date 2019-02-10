@@ -70,3 +70,62 @@ INSERT INTO characters_class (character_id, class_id, levels) VALUES (:selected_
 
 -- delete a class from a character
 DELETE FROM characters_class WHERE character_id = :selected_character_id AND class_id = :selected_class_id;
+
+
+-- ------ Manage Races ------ --
+
+-- display table for Manage Races page
+SELECT race_name AS "Race", lifespan AS "Lifespan (avg, years)", height as "Height (avg, meters)", weight AS "Weight (avg, kg)", speed AS "Speed (m/s)" FROM race;
+
+-- add a race
+INSERT INTO race (race_name, lifespan, height, weight, speed) VALUES (:race, :life, :ht, :wt);
+
+-- display a single class for the update class form
+SELECT race_id, race_name, lifespan, height, weight, speed FROM race WHERE race_id = :selected_id;
+
+-- update race values
+UPDATE race
+SET race_name = :race, lifespan = :life, height = :ht, weight = :wt, speed = :spd
+WHERE race_id = :selected_id;
+
+-- display race and specials
+SELECT race_name AS "Race", special_name AS "Special", special_description AS "Special Description" FROM race R
+INNER JOIN race_special RS ON R.race_id = RS.race_id
+INNER JOIN special S ON S.special_id = RS.special_id;
+
+-- assign a special to a race
+INSERT INTO race_special VALUES (:race, :special);
+
+
+-- ------ Manage Classes ------ --
+
+-- display table for Manage Classes page
+SELECT class_name AS "Class", hit_die AS "Hit Die", armor AS "Armor", saving_throw_1 AS "Saving Throw", saving_throw_2 AS "Saving Throw" FROM class;
+
+-- add a class
+INSERT INTO class (class_name, hit_die, armor, saving_throw_1, saving_throw_2) VALUES (:class, :die, :arm, :st1, :st2);
+
+-- get data for single class for update form
+SELECT class_id, class_name, hit_die, armor, saving_throw_1, saving_throw_2 FROM class WHERE class_id = :selected_id;
+
+-- update a class
+UPDATE class
+SET class_name = :class, hit_die = :die, armor = :arm, saving_throw_1 = :st1, saving_throw_2 = :st2
+WHERE class_id = :selected_id;
+
+
+-- ------ Manage Specials ------ --
+
+-- display table for the Manage Special Attributes page
+SELECT special_name AS "Special", special_description AS "Description" FROM special;
+
+-- add a special
+INSERT INTO special (special_name, special_description) VALUES (:special, :description);
+
+-- display a single special for update form
+SELECT special_id, special_name, special_description FROM special WHERE special = :selected_id;
+
+-- update a special
+UPDATE special
+SET special_name = :special, special_description = :desc
+WHERE special_id = :selected_id;

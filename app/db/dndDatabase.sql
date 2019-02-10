@@ -32,8 +32,8 @@ UNLOCK TABLES;
 CREATE TABLE class (
 class_id smallint NOT NULL AUTO_INCREMENT,
 class_name varchar(20) NOT NULL,
-hit_die tinyint NOT NULL CHECK (hit_die=6 OR hit_die=8 OR hit_die=10 OR hit_die=12),
-armor varchar(6) DEFAULT NULL CHECK(armor="Light" OR armor="Medium" OR armor="Heavy" OR armor=NULL),
+hit_die tinyint NOT NULL,
+armor varchar(6) DEFAULT NULL,
 saving_throw_1 varchar(15),
 saving_throw_2 varchar(15),
 PRIMARY KEY (class_id),
@@ -82,7 +82,7 @@ UNIQUE KEY (special_name)
 ) ENGINE=InnoDb;
 -- Populate special table
 LOCK TABLES special WRITE;
-INSERT INTO special (special_name, special_description) VALUES ("Darkvision", "Out to 60 ft treat dim light as bright light and darkness as dim. Cannot discern colors in darkness."), ("Fey Ancestry", "You have advantage on saving throws against being charmed, and magic can't put you to sleep."), ("Dwarven Resilience", "You have advantage on saving throws against poison, and you have resistance against poison damage."), ("Lucky", "When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.");
+INSERT INTO special (special_name, special_description) VALUES ("Darkvision", "Out to 60 feet, treat dim light as bright light and darkness as dim light. You cannot discern colors in darkness."), ("Fey Ancestry", "You have advantage on saving throws against being charmed, and magic can't put you to sleep."), ("Dwarven Resilience", "You have advantage on saving throws against poison, and you have resistance against poison damage."), ("Lucky", "When you roll a 1 on an attack roll, ability check, or saving throw, you can reroll the die and must use the new roll.");
 UNLOCK TABLES;
 
 -- Create the Race_Special table for the M:M relationship.

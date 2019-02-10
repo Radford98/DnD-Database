@@ -7,8 +7,45 @@
         <li>Delete a character</li>
         <li>Add a class to a character</li>
         <li>Update character class levels</li>
-        <li>Assign a character's primary class</li>
     </ul>
 </div>
+
+<div>
+    <form>
+        <fieldset>
+            <legend><h3>Add a character</h3></legend>
+            <!-- This is for demo purposes. Production will populate lists from
+            database -->
+                <label for="player_select">Select Player:</label>
+                    <select id="dm_select">
+                        <option value="">--Please choose an available Player--</option>
+                        <option value="player_1">Player 1</option>
+                        <option value="player_2">Player 2</option>
+                    </select>
+                <br/>
+
+                <label for="character_name">Character Name:
+                    <input type="text" class="inputField" name="first_name" id="first_name" size="100" maxlength="100">
+                </label>
+                <br/>
+
+                <label for="race_select">Select Race:</label>
+                    <select id="race_select">
+                        <option value="">--Please select a race--</option>
+                        <option value="human">Human</option>
+                        <option value="orc">Orc</option>
+                        <option value="elf">Elf</option>
+                    </select>
+                <br/>
+
+                <label for="background">Character Background:
+                    <input type="text" class="inputField" name="background" id="background" size="100" maxlength="100">
+                </label>
+                <br/>
+          <input type="submit" value="Add Character" id="addCharacter" class="btn">
+      </fieldset>
+    </form>
+</div>
+
 
 <a href="/">Home</a>

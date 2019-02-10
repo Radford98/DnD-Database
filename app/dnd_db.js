@@ -41,8 +41,27 @@ app.get('/manageCharacters', function(req, res) {
     res.render('manageCharacters');
 });
 
-app.get('/managePlayers', function(req, res) {
-    res.render('managePlayers');
+app.get('/managePlayers', function(req, res, next) {
+    var context = {};
+    
+    // This context entry is for demo purposes. Actual context data will
+    // be supplied from the db
+    context.entries = 
+        [
+            {
+                id: 1,
+                first_name: "Edwin",
+                last_name: "Tulmer",
+                dm: "Bardo the Just"
+            },
+            {
+                id: 2,
+                first_name: "Dustin",
+                last_name: "DeWind",
+                dm: "Bardo the Just"
+            }
+        ];
+    res.render('managePlayers', context);
 });
 
 app.get('/manageRaces', function(req, res) {

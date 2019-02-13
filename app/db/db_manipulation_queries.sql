@@ -2,6 +2,8 @@
 -- CS340 Group 42
 -- D&D Database
 
+-- Queries using data provided by the user is denoted with a colon :
+
 -- ------ Manage Players ------ --
 
 -- display table for Manage Players page

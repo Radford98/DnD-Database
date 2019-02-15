@@ -25,9 +25,10 @@
             database -->
           <label for="dm_select"> Dungeon Master:</label>
           <select id="dm_select">
-            <option value="">--Please choose an available DM--</option>
-            <option value="dm_1">DM 1</option>
-            <option value="dm_2">DM 2</option>
+            <option value="">--Choose an available DM--</option>
+            {{#each dm}}
+            <option value="{{dmId}}">{{dm}}</option>
+            {{/each}}
           </select>
           <br/>
           <input type="submit" id="addPlayer">
@@ -36,39 +37,39 @@
 </div>
 
 <div id="playerTable">
-    <h1>Players</h1>
+  <h1>Players</h1>
     <table>
-  <thead>
-    <tr>
-      <th hidden></th>
-      <th> First Name </th>
-      <th> Last Name </th>
-      <th> Dungeon Master </th>
-      <th> </th>
-    </tr>
-  </thead>
-  <tbody>
-  {{#each entries}}
-    <tr>
-      <td hidden> {{this.id}} </td>
-      <td> {{this.first_name}} </td>
-      <td> {{this.last_name}} </td>
-      <td> {{this.dm}} </td>
-      <td>
-        <form>
-          <input type="submit" value="Delete" class="btn">
-        </form>
-      </td>
-      <td>
-        <form>
-          <input type="submit" value="Update" class="btn">
-        </form>
-      </td>
-    </tr>
-  {{/each}}
-  </tbody>
-</table>
-</div>
+      <thead>
+        <tr>
+          <th hidden></th>
+          <th> First Name </th>
+          <th> Last Name </th>
+          <th> Dungeon Master </th>
+          <th> </th>
+          <th> </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each players}}
+        <tr>
+          <td hidden> {{this.id}} </td>
+          <td> {{this.first_name}} </td>
+          <td> {{this.last_name}} </td>
+          <td> {{this.dm}} </td>
+          <td>
+            <form>
+              <input type="submit" value="Delete" class="btn">
+            </form>
+          </td>
+          <td>
+            <form>
+              <input type="submit" value="Update" class="btn">
+            </form>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
 </div>
 
 <a href="/">Home</a>

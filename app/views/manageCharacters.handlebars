@@ -1,50 +1,107 @@
 <h1>Manage Characters</h1>
 <div class="page_desc">
-    <p>This page allows you to</p>
+  <p>This page allows you to</p>
     <ul>
-        <li>Add a character</li>
-        <li>Update character attributes</li>
-        <li>Delete a character</li>
-        <li>Add a class to a character</li>
-        <li>Update character class levels</li>
+      <li>Add a character</li>
+      <li>Update character attributes</li>
+      <li>Delete a character</li>
+      <li>Add a class to a character</li>
+      <li>Update character class levels</li>
     </ul>
 </div>
 
 <div>
-    <form>
-        <fieldset>
-            <legend><h3>Add a character</h3></legend>
-            <!-- This is for demo purposes. Production will populate lists from
-            database -->
-                <label for="player_select">Select Player:</label>
-                    <select id="dm_select">
-                        <option value="">--Please choose an available Player--</option>
-                        <option value="player_1">Player 1</option>
-                        <option value="player_2">Player 2</option>
-                    </select>
-                <br/>
+  <form>
+    <fieldset>
+      <legend><h3>Add a character</h3></legend>
+        <!-- This is for demo purposes. Production will populate lists from
+        database -->
+        <label for="player_select">Select Player:</label>
+          <select id="player_select">
+            <option value="">--Choose an available Player--</option>
+            {{#each players}}
+            <option value="{{playerId}}">{{playerName}}</option>
+            {{/each}}
+          </select>
+        <br/>
 
-                <label for="character_name">Character Name:
-                    <input type="text" class="inputField" name="first_name" id="first_name" size="100" maxlength="100">
-                </label>
-                <br/>
+        <label for="character_name">Character Name:
+          <input type="text" class="inputField" name="first_name" id="first_name" size="100" maxlength="100">
+        </label>
+        <br/>
 
-                <label for="race_select">Select Race:</label>
-                    <select id="race_select">
-                        <option value="">--Please select a race--</option>
-                        <option value="human">Human</option>
-                        <option value="orc">Orc</option>
-                        <option value="elf">Elf</option>
-                    </select>
-                <br/>
+        <label for="race_select">Select Race:</label>
+          <select id="race_select">
+              <option value="">--Select a race--</option>
+              {{#each races}}
+              <option value="{{raceId}}">{{race}}</option>
+              {{/each}}
+          </select>
+        <br/>
 
-                <label for="background">Character Background:
-                    <input type="text" class="inputField" name="background" id="background" size="100" maxlength="100">
-                </label>
-                <br/>
-          <input type="submit" value="Add Character" id="addCharacter" class="btn">
-      </fieldset>
-    </form>
+        <label for="class_select">Select Starting Class:</label>
+          <select id="class_select">
+              <option value="">--Select a class--</option>
+              {{#each classes}}
+              <option value="{{classId}}">{{class}}</option>
+              {{/each}}
+          </select>
+        <br/>
+
+
+        <label for="background">Character Background:
+            <input type="text" class="inputField" name="background" id="background" size="100" maxlength="100">
+        </label>
+        <br/>
+        <input type="submit" value="Add Character" id="addCharacter" class="btn">
+    </fieldset>
+  </form>
+</div>
+
+<div id="characterTable">
+  <h1>Characters</h1>
+    <table>
+      <thead>
+        <tr>
+          <th hidden></th>
+          <th> Player Name </th>
+          <th> Character Name </th>
+          <th> Race </th>
+          <th> Classes </th>
+          <th> Background </th>
+          <th> </th>
+          <th> </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each characters}}
+        <tr>
+          <td hidden> {{this.id}} </td>
+          <td> {{this.playerName}} </td>
+          <td> {{this.characterName}} </td>
+          <td> {{this.race}} </td>
+          <td>
+            <ul>
+              {{#each classes}}
+              <li>{{this.class}}</li>
+              {{/each}}
+            </ul>
+          </td>
+          <td> {{this.background}} </td>
+          <td>
+            <form>
+              <input type="submit" value="Delete" class="btn">
+            </form>
+          </td>
+          <td>
+            <form>
+              <input type="submit" value="Update" class="btn">
+            </form>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
 </div>
 
 

@@ -44,9 +44,9 @@ app.get('/manageCharacters', function(req, res) {
 app.get('/managePlayers', function(req, res, next) {
     var context = {};
     
-    // This context entry is for demo purposes. Actual context data will
-    // be supplied from the db
-    context.entries = 
+// This context entry is for demo purposes. Actual context data will
+// be supplied from the db
+    context.players = 
         [
             {
                 id: 1,
@@ -61,11 +61,44 @@ app.get('/managePlayers', function(req, res, next) {
                 dm: "Bardo the Just"
             }
         ];
+    context.dm =
+        [
+            {
+                dmId: "dm_1", 
+                dm: "Edwin Tulmer"
+            },
+            {
+                dmId: "dm_2",
+                dm: "Bardo the Just"
+            }
+        ];
+// End of demo data
+
     res.render('managePlayers', context);
 });
 
 app.get('/manageRaces', function(req, res) {
     res.render('manageRaces');
+});
+
+app.get('/updateCharacter', function(req, res) {
+    res.render('updateCharacter');
+});
+
+app.get('/updateClass', function(req, res) {
+    res.render('updateClass');
+});
+
+app.get('/updatePlayer', function(req, res) {
+    res.render('updatePlayer');
+});
+
+app.get('/updateRace', function(req, res) {
+    res.render('updateRace');
+});
+
+app.get('/updateSpecial', function(req, res) {
+    res.render('updateSpecial');
 });
 
 // Handle 404 messages

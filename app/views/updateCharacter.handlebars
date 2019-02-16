@@ -1,0 +1,62 @@
+<h1>Update {{this.character_name}}</h1>
+
+<div>
+  <form>
+    <fieldset>
+      <legend><h3>Enter new information for {{this.character_name}}</h3></legend>
+        <!-- This is for demo purposes. Production will populate lists from
+        database -->
+        <label for="character_name">Character Name:
+          <input type="text" class="inputField" name="character_name" id="character_name" size="100" maxlength="100" value="{{this.character_name}}">
+        </label>
+        <br/>
+
+        <label for="background">Character Background:
+            <input type="text" class="inputField" name="background" id="background" size="100" maxlength="100" wrap value="{{this.background}}">
+        </label>
+        <br/>
+
+        <input type="submit" value="Update Character" id="updateCharacter" class="btn">
+        <br/>
+
+        <table>
+          <thead>
+            <tr>
+              <th hidden></th>
+              <th> Class </th>
+              <th> Level </th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each classes}}
+            <tr>
+              <td hidden> {{this.class_id}}</td>
+              <td> {{this.class_name}} </td>
+              <td>
+                <input type="number" class="inputField" min="1" value="{{this.level}}">
+              </td>
+              <td>
+                <input type="submit" value="Update Level" id="updateLevel" class="btn">
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+        <br/>
+
+        <label for="class_select">Select a new class to add:</label>
+        <select id="class_select">
+              <option value="">--Select a class--</option>
+              {{#each classes}}
+              <option value="{{classId}}">{{class}}</option>
+              {{/each}}
+          </select>
+        <br/>
+
+        <input type="submit" value="Add Class" id="addClass" class="btn">
+    </fieldset>
+  </form>
+</div>
+
+<a href="/">Home</a>

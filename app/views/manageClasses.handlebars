@@ -7,4 +7,93 @@
     </ul>
 </div>
 
+<div>
+  <form>
+    <fieldset>
+      <legend><h3>Add a class</h3></legend>
+        <!-- This is for demo purposes. Production will populate lists from
+        database -->
+        <label for="class_name">Class Name:
+          <input type="text" class="inputField" name="class_name" id="class_name" size="30" maxlength="20">
+        </label>
+        <br/>
+
+        <label for="hit_die">Hit Die:
+          <input type="number" class="inputField" name="hit_die" id="hit_die" min="0">
+        </label>
+        <br/>
+
+        <label for="armor_select">Armor:</label>
+        <select id="armor_select">
+            <option value="">--Select an armor type--</option>
+            <option value="light">Light</option>
+            <option value="medium">Medium</option>
+            <option value="heavy">Heavy</option>
+          </select>
+        <br/>
+
+        <label for="saving_throw_1_select">Saving Throw #1:</label>
+        <select id="saving_throw_1_select">
+            <option value="">--Select an attribute--</option>
+            <option value="strength">Strength</option>
+            <option value="dexterity">Dexterity</option>
+            <option value="constitution">Constitution</option>
+            <option value="intelligence">Intelligence</option>
+            <option value="wisdom">Wisdom</option>
+            <option value="charisma">Charisma</option>
+          </select>
+        <br/>
+
+        <label for="saving_throw_2_select">Saving Throw #2:</label>
+        <select id="saving_throw_2_select">
+            <option value="">--Select an attribute--</option>
+            <option value="strength">Strength</option>
+            <option value="dexterity">Dexterity</option>
+            <option value="constitution">Constitution</option>
+            <option value="intelligence">Intelligence</option>
+            <option value="wisdom">Wisdom</option>
+            <option value="charisma">Charisma</option>
+          </select>
+        <br/>
+
+        <input type="submit" value="Add Class" id="addClass" class="btn">
+    </fieldset>
+  </form>
+</div>
+
+<div id="classTable">
+  <h1>Classes</h1>
+    <table>
+      <thead>
+        <tr>
+          <th hidden></th>
+          <th> Class Name </th>
+          <th> Hit Die </th>
+          <th> Armor </th>
+          <th> Saving Throw #1 </th>
+          <th> Saving Throw #2 </th>
+          <th> </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each classes}}
+        <tr>
+          <td hidden> {{this.id}} </td>
+          <td> {{this.className}} </td>
+          <td> {{this.hitDie}} </td>
+          <td> {{this.armor}} </td>
+          <td> {{this.savingThrow1}} </td>
+          <td> {{this.savingThrow2}} </td>
+          <td>
+            <form>
+              <input type="submit" value="Update" class="btn">
+            </form>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+</div>
+
+
 <a href="/">Home</a>

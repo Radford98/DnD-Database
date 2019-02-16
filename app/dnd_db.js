@@ -81,6 +81,26 @@ app.get('/manageRaces', function(req, res) {
     res.render('manageRaces');
 });
 
+app.get('/updateCharacter', function(req, res) {
+    res.render('updateCharacter');
+});
+
+app.get('/updateClass', function(req, res) {
+    res.render('updateClass');
+});
+
+app.get('/updatePlayer', function(req, res) {
+    res.render('updatePlayer');
+});
+
+app.get('/updateRace', function(req, res) {
+    res.render('updateRace');
+});
+
+app.get('/updateSpecial', function(req, res) {
+    res.render('updateSpecial');
+});
+
 // Handle 404 messages
 app.use(function(req, res) {
     res.status(404);

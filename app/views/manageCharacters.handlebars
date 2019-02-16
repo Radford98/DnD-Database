@@ -26,7 +26,7 @@
         <br/>
 
         <label for="character_name">Character Name:
-          <input type="text" class="inputField" name="first_name" id="first_name" size="100" maxlength="100">
+          <input type="text" class="inputField" name="character_name" id="character_name" size="100" maxlength="100">
         </label>
         <br/>
 
@@ -50,7 +50,7 @@
 
 
         <label for="background">Character Background:
-            <input type="text" class="inputField" name="background" id="background" size="100" maxlength="100">
+            <input type="text" class="inputField" name="background" id="background" size="100" maxlength="100" wrap>
         </label>
         <br/>
         <input type="submit" value="Add Character" id="addCharacter" class="btn">
@@ -83,7 +83,7 @@
           <td>
             <ul>
               {{#each classes}}
-              <li>{{this.class}}</li>
+              <li>{{this.class}}: Level {{this.level}}</li>
               {{/each}}
             </ul>
           </td>

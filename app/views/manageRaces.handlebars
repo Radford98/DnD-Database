@@ -37,7 +37,7 @@
         </label>
         <br/>
 
-        <label for="special">Special:</label>
+        <label for="special_select">Special:</label>
         <select id="special_select">
               <option value="">--Select a special attribute--</option>
               {{#each specials}}
@@ -64,7 +64,6 @@
           <th> Speed </th>
           <th> Specials </th>
           <th> </th>
-          <th> </th>
         </tr>
       </thead>
       <tbody>
@@ -82,11 +81,6 @@
               <li>{{this.special}}</li>
               {{/each}}
             </ul>
-          </td>
-          <td>
-            <form>
-              <input type="submit" value="Delete" class="btn">
-            </form>
           </td>
           <td>
             <form>

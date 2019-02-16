@@ -1,0 +1,54 @@
+<h1>Update Class: {{this.class_name}}</h1>
+<div>
+  <form>
+    <fieldset>
+      <legend><h3>Enter new information for {{this.class_name}}</h3></legend>
+        <!-- This is for demo purposes. Production will populate lists from
+        database -->
+        <label for="class_name">Class Name:
+          <input type="text" class="inputField" name="class_name" id="class_name" size="30" maxlength="20" value="{{this.class_name}}">
+        </label>
+        <br/>
+
+        <label for="hit_die">Hit Die:
+          <input type="number" class="inputField" name="hit_die" id="hit_die" min="0" value="this.hit_die">
+        </label>
+        <br/>
+
+        <label for="armor_select">Armor:</label>
+        <select id="armor_select">
+            <option value="">--Select an armor type--</option>
+            <option value="light">Light</option>
+            <option value="medium">Medium</option>
+            <option value="heavy">Heavy</option>
+          </select>
+        <br/>
+
+        <label for="saving_throw_1_select">Saving Throw #1:</label>
+        <select id="saving_throw_1_select">
+            <option value="">--Select an attribute--</option>
+            <option value="strength">Strength</option>
+            <option value="dexterity">Dexterity</option>
+            <option value="constitution">Constitution</option>
+            <option value="intelligence">Intelligence</option>
+            <option value="wisdom">Wisdom</option>
+            <option value="charisma">Charisma</option>
+          </select>
+        <br/>
+
+        <label for="saving_throw_2_select">Saving Throw #2:</label>
+        <select id="saving_throw_2_select">
+            <option value="">--Select an attribute--</option>
+            <option value="strength">Strength</option>
+            <option value="dexterity">Dexterity</option>
+            <option value="constitution">Constitution</option>
+            <option value="intelligence">Intelligence</option>
+            <option value="wisdom">Wisdom</option>
+            <option value="charisma">Charisma</option>
+          </select>
+        <br/>
+
+        <input type="submit" value="Update Class" id="updateClass" class="btn">
+    </fieldset>
+  </form>
+</div>

@@ -1,0 +1,30 @@
+<h1>Update Player: {{this.player_first_name}} {{this.player_last_name}}</h1>
+
+<div>
+    <form>
+      <fieldset>
+        <legend><h3>Enter new information for {{this.player_first_name}}</h3></legend>
+          <label for="first_name">First Name:
+            <input type="text" class="inputField" name="first_name" id="first_name" size="100" maxlength="100" value="{{this.player_first_name}}">
+          </label>
+          <br/>
+          <label for="last_name">Last Name:
+            <input type="text" class="inputField" name="last_name" id="last_name" size="100" maxlength="100" value="this.player_last_name">
+          </label>
+          <br/>
+          <!-- This is for demo purposes. Production will populate list from
+            database -->
+          <label for="dm_select"> Dungeon Master: </label>
+          <select id="dm_select">
+            <option value="">--Choose an available DM--</option>
+            {{#each dm}}
+            <option value="{{dmId}}">{{dm}}</option>
+            {{/each}}
+          </select>
+          <br/>
+          <input type="submit" id="addPlayer">
+      </fieldset>
+    </form>
+</div>
+
+<a href="/">Home</a>

@@ -11,13 +11,13 @@
 </div>
 
 <div>
-  <form>
+  <form action="/manageCharacters" method="post">
     <fieldset>
       <legend><h3>Add a character</h3></legend>
         <!-- This is for demo purposes. Production will populate lists from
         database -->
         <label for="player_select">Select Player:</label>
-          <select id="player_select">
+          <select id="player_select" name="player_select">
             <option value="">--Choose an available Player--</option>
             {{#each players}}
             <option value="{{playerId}}">{{playerName}}</option>
@@ -31,19 +31,19 @@
         <br/>
 
         <label for="race_select">Select Race:</label>
-          <select id="race_select">
+          <select id="race_select" name="race_select">
               <option value="">--Select a race--</option>
               {{#each races}}
-              <option value="{{raceId}}">{{race}}</option>
+              <option value="{{raceId}}">{{raceName}}</option>
               {{/each}}
           </select>
         <br/>
 
         <label for="class_select">Select Starting Class:</label>
-          <select id="class_select">
+          <select id="class_select" name="class_select">
               <option value="">--Select a class--</option>
               {{#each classes}}
-              <option value="{{classId}}">{{class}}</option>
+              <option value="{{classId}}">{{className}}</option>
               {{/each}}
           </select>
         <br/>

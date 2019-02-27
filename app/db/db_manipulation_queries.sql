@@ -19,7 +19,7 @@ INSERT INTO player (player_first_name, player_last_name, dm) VALUES (:fname, :ln
 SELECT player_id, player_first_name, player_last_name, dm FROM player WHERE player_id = :selected_id;
 
 -- drop down menu for selecting player to delete
-SELECT player_first_name AS "First Name", player_last_name AS "Last Name" FROM player;
+SELECT player_first_name AS fname, player_last_name AS lname FROM player;
 
 -- delete player
 DELETE FROM player WHERE player_id = :selected_id;
@@ -43,8 +43,14 @@ INNER JOIN player P ON P.player_id = tbl1.player_id
 INNER JOIN race R on R.race_id = tbl1.race_id
 ORDER BY playerName ASC;
 
+-- display the drop down menus for selecting a player, race, and class when adding a Character
+SELECT player_id AS playerId, player_first_name AS playerName FROM player;
+SELECT race_id AS raceId, race_name AS raceName FROM race;
+SELECT class_id AS classId, class_name AS className FROM class;
+
 -- add a character
 INSERT INTO characters (player_id, character_name, race_id, background) VALUES (:player, :character, :race, :background);
+INSERT INTO characters_class (character_id, class_id, levels, primary_class) VALUES ((SELECT character_id FROM characters WHERE character_id = LAST_INSERT_ID()), :class_id, 1, 1);
 
 -- get a single character's data for the Update Character form
 SELECT C.character_id, P.player_first_name AS "Player", C.player_id, C.character_name, R.race_name AS "Race", C.race_id, C.background FROM characters C INNER JOIN race R ON C.race_id = R.race_id INNER JOIN player P ON P.player_id = C.player_id ORDER BY Player ASC;

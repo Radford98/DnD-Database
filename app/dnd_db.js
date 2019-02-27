@@ -11,10 +11,12 @@
     BodyParser to handle POST requests from form entries.
  *****************************************************************************/
 var express = require('express')
+var mysql = require('./dbcon.js');
 
 var app = express();    // create the app
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var bodyParser = require('body-parser');
+
 
 /* App configuration */
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,18 +25,46 @@ app.use(express.static('files')); // For non-templated items (css, scripts...)
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 4733);
+app.set('port', 4738);      // 4733 for master
+app.set('mysql', mysql);
 
 app.get('/', function(req, res) {
     res.render('home');
 });
 
-app.get('/manageClasses', function(req, res) {
-    res.render('manageClasses');
+app.get('/manageClasses', function (req, res) {
+       res.render('manageClasses');
 });
 
-app.get('/manageSpecials', function(req, res) {
-    res.render('manageSpecials');
+app.get('/manageSpecials', function (req, res) {
+    var context = {};
+    // Demo Data
+    /*
+    context.specials = [
+        {
+            id: 1,
+            specialName: "Darkvision",
+            specialDescription: "See in dark"
+        },
+        {
+            id: 2,
+            specialName: "Dwarven Resilience",
+            specialDescription: "No poison"
+        }
+    ]
+    */
+
+    mysql.pool.query('SELECT special_id AS id, special_name AS specialName, special_description AS specialDescription FROM special', function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.specials = results;
+        console.log(results);
+        console.log(context);
+    })
+
+    res.render('manageSpecials', context);
 });
 
 app.get('/manageCharacters', function(req, res) {

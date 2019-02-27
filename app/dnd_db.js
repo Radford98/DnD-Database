@@ -134,23 +134,22 @@ app.post('/manageCharacters', function (req, res) {
             console.log(JSON.stringify(error));
             res.write(JSON.stringify(error));
             res.end();
+        } else {    // Add a character's starting class
+            sql = 'INSERT INTO characters_class (character_id, class_id, levels, primary_class) VALUES (?, ?, 1, 1)';
+            inserts = [results.insertId, req.body.class_select];
+            mysql.pool.query(sql, inserts, function (error, results, fields) {
+                if (error) {
+                    console.log(JSON.stringify(error));
+                    res.write(JSON.stringify(error));
+                    res.end();
+                } else {
+                    res.redirect('/manageCharacters');
+                }
+            });
         }
     });
-
-    // Add a character's starting class
-    sql = 'INSERT INTO characters_class (character_id, class_id, levels, primary_class) VALUES ((SELECT character_id FROM characters WHERE character_id = LAST_INSERT_ID()), ?, 1, 1)';
-    inserts = [req.body.class_select];
-    mysql.pool.query(sql, inserts, function (error, results, fields) {
-        if (error) {
-            console.log(JSON.stringify(error));
-            res.write(JSON.stringify(error));
-            res.end();
-        } else {
-            res.redirect('/manageCharacters');
-        }
-    });
-
 });
+
 
 app.get('/managePlayers', function(req, res, next) {
     var context = {};

@@ -50,7 +50,7 @@ SELECT class_id AS classId, class_name AS className FROM class;
 
 -- add a character
 INSERT INTO characters (player_id, character_name, race_id, background) VALUES (:player, :character, :race, :background);
-INSERT INTO characters_class (character_id, class_id, levels, primary_class) VALUES ((SELECT character_id FROM characters WHERE character_id = LAST_INSERT_ID()), :class_id, 1, 1);
+INSERT INTO characters_class (character_id, class_id, levels, primary_class) VALUES (:results.insertId, :class_id, 1, 1);
 
 -- get a single character's data for the Update Character form
 SELECT C.character_id, P.player_first_name AS "Player", C.player_id, C.character_name, R.race_name AS "Race", C.race_id, C.background FROM characters C INNER JOIN race R ON C.race_id = R.race_id INNER JOIN player P ON P.player_id = C.player_id ORDER BY Player ASC;

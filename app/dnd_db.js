@@ -60,9 +60,9 @@ app.get('/manageSpecials', function (req, res) {
             res.end();
         }
         context.specials = results;
-        console.log(results);
-        console.log(context);
     })
+
+    console.log(context);
 
     res.render('manageSpecials', context);
 });

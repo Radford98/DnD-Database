@@ -71,7 +71,7 @@ app.get('/manageCharacters', function (req, res) {
             res.end();
         }
         context.characters = results;
-        res.render('manageCharacters');
+        res.render('manageCharacters', context);
     });
 });
 

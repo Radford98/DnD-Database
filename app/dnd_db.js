@@ -59,11 +59,20 @@ app.post('/manageSpecials', function (req, res) {
         } else {
             res.redirect('/manageSpecials');
         }
-    });
+    })
 });
 
-app.get('/manageCharacters', function(req, res) {
-    res.render('manageCharacters');
+app.get('/manageCharacters', function (req, res) {
+    var context = {};
+    sql = 'SELECT P.player_first_name AS playerName, tbl1.character_name AS characterName, R.race_name AS race, tbl1.background AS background, tbl1.Levels, tbl2.class_name AS primaryClass FROM (SELECT CH.character_name, sum(CC.levels) AS Levels, CH.player_id, CH.race_id, CH.background FROM characters CH INNER JOIN characters_class CC ON CH.character_id = CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id GROUP BY CH.character_name) AS tbl1 INNER JOIN (SELECT CH.character_name, CL.class_name FROM characters CH INNER JOIN characters_class CC ON CH.character_id=CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id WHERE CC.primary_class = 1) AS tbl2 ON tbl1.character_name = tbl2.character_name INNER JOIN player P ON P.player_id = tbl1.player_id INNER JOIN race R on R.race_id = tbl1.race_id ORDER BY Player ASC;'
+    mysql.pool.query(sql, function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.characters = results;
+        res.render('manageCharacters');
+    });
 });
 
 app.get('/managePlayers', function(req, res, next) {

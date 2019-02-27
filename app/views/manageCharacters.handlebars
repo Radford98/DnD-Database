@@ -67,7 +67,8 @@
           <th> Player Name </th>
           <th> Character Name </th>
           <th> Race </th>
-          <th> Classes </th>
+ <!--         <th> Classes </th>    -->
+          <th> Primary Class </th>
           <th> Background </th>
           <th> </th>
           <th> </th>
@@ -81,11 +82,8 @@
           <td> {{this.characterName}} </td>
           <td> {{this.race}} </td>
           <td>
-            <ul>
-              {{#each classes}}
-              <li>{{this.class}}: Level {{this.level}}</li>
-              {{/each}}
-            </ul>
+<!--            <ul>              {{#each classes}}              <li>{{this.class}}: Level {{this.level}}</li>              {{/each}}            </ul>      -->
+              {{this.primaryClass}}
           </td>
           <td> {{this.background}} </td>
           <td>

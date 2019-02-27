@@ -38,21 +38,6 @@ app.get('/manageClasses', function (req, res) {
 
 app.get('/manageSpecials', function (req, res) {
     var context = {};
-    // Demo Data
-    /*
-    context.specials = [
-        {
-            id: 1,
-            specialName: "Darkvision",
-            specialDescription: "See in dark"
-        },
-        {
-            id: 2,
-            specialName: "Dwarven Resilience",
-            specialDescription: "No poison"
-        }
-    ]
-    */
     mysql.pool.query('SELECT special_id AS id, special_name AS specialName, special_description AS specialDescription FROM special', function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
@@ -60,6 +45,20 @@ app.get('/manageSpecials', function (req, res) {
         }
         context.specials = results;
         res.render('manageSpecials', context);
+    });
+});
+
+app.post('/manageSpecials', function (req, res) {
+    var sql = "INSERT INTO special (special_name, special_description) VALUES (?,?)";
+    var inserts = [req.body.special_name, req.body.special_description];
+    mysql.poo.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/manageSpecials');
+        }
     });
 });
 

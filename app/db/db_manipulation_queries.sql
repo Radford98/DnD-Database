@@ -119,7 +119,7 @@ WHERE class_id = :selected_id;
 -- ------ Manage Specials ------ --
 
 -- display table for the Manage Special Attributes page
-SELECT special_name AS "Special", special_description AS "Description" FROM special;
+SELECT special_id AS id, special_name AS specialName, special_description AS specialDescription FROM special;
 
 -- add a special
 INSERT INTO special (special_name, special_description) VALUES (:special, :description);

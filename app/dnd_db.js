@@ -36,6 +36,16 @@ app.get('/manageClasses', function (req, res) {
        res.render('manageClasses');
 });
 
+function getSpecials(res, mysql, context) {
+        mysql.pool.query('SELECT special_id AS id, special_name AS specialName, special_description AS specialDescription FROM special', function (error, results, fields) {
+                if (error) {
+                    res.write(JSON.stringify(error));
+                    res.end();
+                }
+                context.specials = results;
+            })
+}
+
 app.get('/manageSpecials', function (req, res) {
     var context = {};
     // Demo Data
@@ -53,14 +63,8 @@ app.get('/manageSpecials', function (req, res) {
         }
     ]
     */
-
-    mysql.pool.query('SELECT special_id AS id, special_name AS specialName, special_description AS specialDescription FROM special', function (error, results, fields) {
-        if (error) {
-            res.write(JSON.stringify(error));
-            res.end();
-        }
-        context.specials = results;
-    })
+    getSpecials(res, mysql, context);
+    
 
     console.log(context);
 

@@ -14,6 +14,9 @@ router.get('/', function (req, res) {
             res.end();
         }
         context.classes = results;
+        context.classes.forEach(function (element) {
+            if (element.armor == null) { element.armor = "None" };
+        });
         res.render('manageClasses', context);
     });
 });
@@ -22,7 +25,7 @@ router.post('/', function (req, res) {
     var mysql = req.app.get('mysql');
     var sql = 'INSERT INTO class (class_name, hit_die, armor, saving_throw_1, saving_throw_2) VALUES (?,?,?,?,?)';
     // Change armor to null if needed
-    if (req.body.armor_select == "0") { req.body.armor_select = NULL };
+    if (req.body.armor_select == "0") { req.body.armor_select = null };
     var inserts = [req.body.class_name, req.body.hd_select, req.body.armor_select, req.body.saving_throw_1_select, req.body.saving_throw_2_select];
     mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {

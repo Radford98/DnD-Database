@@ -14,7 +14,7 @@ router.get('/', function (req, res) {
         context.specials = results;
         res.render('manageSpecials', context);
     });
-})
+});
 
 router.post('/', function (req, res) {
     var mysql = req.app.get('mysql');
@@ -29,6 +29,6 @@ router.post('/', function (req, res) {
             res.redirect('/manageSpecials');
         }
     });
-})
+});
 
 module.exports = router;

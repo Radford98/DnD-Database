@@ -30,7 +30,7 @@ router.post('/', function (req, res) {
             res.write(JSON.stringify(error));
             res.end();
         } else {
-            res.redirect('/');
+            res.redirect('/manageClasses');
         }
     });
 });

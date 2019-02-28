@@ -32,9 +32,7 @@ app.get('/', function(req, res) {
     res.render('home');
 });
 
-app.get('/manageClasses', function (req, res) {
-       res.render('manageClasses');
-});
+app.use('/manageClasses', require('./classes.js');
 
 app.use('/manageSpecials', require('./specials.js'));
 

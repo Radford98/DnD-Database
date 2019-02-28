@@ -108,7 +108,7 @@ INSERT INTO race_special VALUES (:race, :special);
 -- ------ Manage Classes ------ --
 
 -- display table for Manage Classes page
-SELECT class_name AS "Class", hit_die AS "Hit Die", armor AS "Armor", saving_throw_1 AS "Saving Throw", saving_throw_2 AS "Saving Throw" FROM class;
+SELECT class_id AS id, class_name AS className, hit_die AS hitDie, armor AS armor, saving_throw_1 AS savingThrow1, saving_throw_2 AS savingThrow2 FROM class;
 
 -- add a class
 INSERT INTO class (class_name, hit_die, armor, saving_throw_1, saving_throw_2) VALUES (:class, :die, :arm, :st1, :st2);

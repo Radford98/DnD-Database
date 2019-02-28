@@ -11,13 +11,13 @@
 </div>
 
 <div>
-  <form>
+  <form action="/manageCharacters" method="post">
     <fieldset>
       <legend><h3>Add a character</h3></legend>
         <!-- This is for demo purposes. Production will populate lists from
         database -->
         <label for="player_select">Select Player:</label>
-          <select id="player_select">
+          <select id="player_select" name="player_select" required>
             <option value="">--Choose an available Player--</option>
             {{#each players}}
             <option value="{{playerId}}">{{playerName}}</option>
@@ -26,31 +26,31 @@
         <br/>
 
         <label for="character_name">Character Name:
-          <input type="text" class="inputField" name="character_name" id="character_name" size="100" maxlength="100">
+          <input type="text" class="inputField" name="character_name" id="character_name" size="100" maxlength="100" required>
         </label>
         <br/>
 
         <label for="race_select">Select Race:</label>
-          <select id="race_select">
+          <select id="race_select" name="race_select" required>
               <option value="">--Select a race--</option>
               {{#each races}}
-              <option value="{{raceId}}">{{race}}</option>
+              <option value="{{raceId}}">{{raceName}}</option>
               {{/each}}
           </select>
         <br/>
 
         <label for="class_select">Select Starting Class:</label>
-          <select id="class_select">
+          <select id="class_select" name="class_select" required>
               <option value="">--Select a class--</option>
               {{#each classes}}
-              <option value="{{classId}}">{{class}}</option>
+              <option value="{{classId}}">{{className}}</option>
               {{/each}}
           </select>
         <br/>
 
 
         <label for="background">Character Background:
-            <input type="text" class="inputField" name="background" id="background" size="100" maxlength="100" wrap>
+            <input type="text" class="inputField" name="background" id="background" size="100" maxlength="100" wrap required>
         </label>
         <br/>
         <input type="submit" value="Add Character" id="addCharacter" class="btn">
@@ -67,7 +67,9 @@
           <th> Player Name </th>
           <th> Character Name </th>
           <th> Race </th>
-          <th> Classes </th>
+ <!--         <th> Classes </th>    -->
+          <th> Primary Class </th>
+            <th> Level </th>
           <th> Background </th>
           <th> </th>
           <th> </th>
@@ -81,12 +83,10 @@
           <td> {{this.characterName}} </td>
           <td> {{this.race}} </td>
           <td>
-            <ul>
-              {{#each classes}}
-              <li>{{this.class}}: Level {{this.level}}</li>
-              {{/each}}
-            </ul>
+<!--            <ul>              {{#each classes}}              <li>{{this.class}}: Level {{this.level}}</li>              {{/each}}            </ul>      -->
+              {{this.primaryClass}}
           </td>
+            <td> {{this.levels}}</td>
           <td> {{this.background}} </td>
           <td>
             <form>

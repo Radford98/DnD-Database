@@ -19,7 +19,7 @@ INSERT INTO player (player_first_name, player_last_name, dm) VALUES (:fname, :ln
 SELECT player_id, player_first_name, player_last_name, dm FROM player WHERE player_id = :selected_id;
 
 -- drop down menu for selecting player to delete
-SELECT player_first_name AS "First Name", player_last_name AS "Last Name" FROM player;
+SELECT player_first_name AS fname, player_last_name AS lname FROM player;
 
 -- delete player
 DELETE FROM player WHERE player_id = :selected_id;
@@ -36,15 +36,21 @@ UPDATE player SET dm = LAST_INSERT_ID() WHERE player_id = LAST_INSERT_ID();
 
 -- display table for Manage Characters page
 -- most of the complexity (namely the two subqueries) is to display the character's level and primary class.
-SELECT P.player_first_name AS "Player", tbl1.character_name AS "Character", R.race_name AS "Race", tbl1.background AS "Background", tbl1.Levels, tbl2.class_name AS "Primary Class" FROM
-(SELECT CH.character_name, sum(CC.levels) AS Levels, CH.player_id, CH.race_id, CH.background FROM characters CH INNER JOIN characters_class CC ON CH.character_id = CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id GROUP BY CH.character_name) AS tbl1
+SELECT tbl1.character_id AS id, CONCAT(P.player_first_name, " ", P.player_last_name) AS playerName, tbl1.character_name AS characterName, R.race_name AS race, tbl1.background AS background, tbl1.Levels, tbl2.class_name AS primaryClass FROM
+(SELECT CH.character_id, CH.character_name, sum(CC.levels) AS Levels, CH.player_id, CH.race_id, CH.background FROM characters CH INNER JOIN characters_class CC ON CH.character_id = CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id GROUP BY CH.character_name) AS tbl1
 INNER JOIN (SELECT CH.character_name, CL.class_name FROM characters CH INNER JOIN characters_class CC ON CH.character_id=CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id WHERE CC.primary_class = 1) AS tbl2 ON tbl1.character_name = tbl2.character_name
 INNER JOIN player P ON P.player_id = tbl1.player_id
 INNER JOIN race R on R.race_id = tbl1.race_id
-ORDER BY Player ASC;
+ORDER BY playerName ASC;
+
+-- display the drop down menus for selecting a player, race, and class when adding a Character
+SELECT player_id AS playerId, CONCAT(player_first_name, " ", player_last_name) AS playerName FROM player;
+SELECT race_id AS raceId, race_name AS raceName FROM race;
+SELECT class_id AS classId, class_name AS className FROM class;
 
 -- add a character
 INSERT INTO characters (player_id, character_name, race_id, background) VALUES (:player, :character, :race, :background);
+INSERT INTO characters_class (character_id, class_id, levels, primary_class) VALUES (:results.insertId, :class_id, 1, 1);
 
 -- get a single character's data for the Update Character form
 SELECT C.character_id, P.player_first_name AS "Player", C.player_id, C.character_name, R.race_name AS "Race", C.race_id, C.background FROM characters C INNER JOIN race R ON C.race_id = R.race_id INNER JOIN player P ON P.player_id = C.player_id ORDER BY Player ASC;
@@ -102,7 +108,7 @@ INSERT INTO race_special VALUES (:race, :special);
 -- ------ Manage Classes ------ --
 
 -- display table for Manage Classes page
-SELECT class_name AS "Class", hit_die AS "Hit Die", armor AS "Armor", saving_throw_1 AS "Saving Throw", saving_throw_2 AS "Saving Throw" FROM class;
+SELECT class_id AS id, class_name AS className, hit_die AS hitDie, armor AS armor, saving_throw_1 AS savingThrow1, saving_throw_2 AS savingThrow2 FROM class;
 
 -- add a class
 INSERT INTO class (class_name, hit_die, armor, saving_throw_1, saving_throw_2) VALUES (:class, :die, :arm, :st1, :st2);
@@ -119,7 +125,7 @@ WHERE class_id = :selected_id;
 -- ------ Manage Specials ------ --
 
 -- display table for the Manage Special Attributes page
-SELECT special_name AS "Special", special_description AS "Description" FROM special;
+SELECT special_id AS id, special_name AS specialName, special_description AS specialDescription FROM special;
 
 -- add a special
 INSERT INTO special (special_name, special_description) VALUES (:special, :description);

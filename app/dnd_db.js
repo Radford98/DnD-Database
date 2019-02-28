@@ -11,10 +11,12 @@
     BodyParser to handle POST requests from form entries.
  *****************************************************************************/
 var express = require('express')
+var mysql = require('./dbcon.js');
 
 var app = express();    // create the app
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var bodyParser = require('body-parser');
+
 
 /* App configuration */
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,23 +25,19 @@ app.use(express.static('files')); // For non-templated items (css, scripts...)
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 4733);
+app.set('port', 4733);      // 4733 for master
+app.set('mysql', mysql);
 
 app.get('/', function(req, res) {
     res.render('home');
 });
 
-app.get('/manageClasses', function(req, res) {
-    res.render('manageClasses');
-});
+app.use('/manageClasses', require('./classes.js'));
 
-app.get('/manageSpecials', function(req, res) {
-    res.render('manageSpecials');
-});
+app.use('/manageSpecials', require('./specials.js'));
 
-app.get('/manageCharacters', function(req, res) {
-    res.render('manageCharacters');
-});
+app.use('/manageCharacters', require('./characters.js'));
+
 
 app.get('/managePlayers', function(req, res, next) {
     var context = {};

@@ -25,7 +25,7 @@ app.use(express.static('files')); // For non-templated items (css, scripts...)
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 4738);      // 4733 for master
+app.set('port', 4739);      // 4733 for master
 app.set('mysql', mysql);
 
 app.get('/', function(req, res) {
@@ -36,34 +36,10 @@ app.get('/manageClasses', function (req, res) {
        res.render('manageClasses');
 });
 
-app.get('/manageSpecials', function (req, res) {
-    var context = {};
-    mysql.pool.query('SELECT special_id AS id, special_name AS specialName, special_description AS specialDescription FROM special', function (error, results, fields) {
-        if (error) {
-            res.write(JSON.stringify(error));
-            res.end();
-        }
-        context.specials = results;
-        res.render('manageSpecials', context);
-    });
-});
-
-app.post('/manageSpecials', function (req, res) {
-    var sql = 'INSERT INTO special (special_name, special_description) VALUES (?,?)';
-    var inserts = [req.body.special_name, req.body.special_description];
-    mysql.pool.query(sql, inserts, function (error, results, fields) {
-        if (error) {
-            console.log(JSON.stringify(error));
-            res.write(JSON.stringify(error));
-            res.end();
-        } else {
-            res.redirect('/manageSpecials');
-        }
-    });
-});
+app.use('/manageSpecials', require('./specials.js'));
 
 function getPlayers(res, mysql, context, complete) {
-    mysql.pool.query('SELECT player_id AS playerId, player_first_name AS playerName FROM player', function (error, results, fields) {
+    mysql.pool.query('SELECT player_id AS playerId, CONCAT(player_first_name, " ", player_last_name) AS playerName FROM player', function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();

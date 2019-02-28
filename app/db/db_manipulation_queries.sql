@@ -44,7 +44,7 @@ INNER JOIN race R on R.race_id = tbl1.race_id
 ORDER BY playerName ASC;
 
 -- display the drop down menus for selecting a player, race, and class when adding a Character
-SELECT player_id AS playerId, player_first_name AS playerName FROM player;
+SELECT player_id AS playerId, CONCAT(player_first_name, " ", player_last_name) AS playerName FROM player;
 SELECT race_id AS raceId, race_name AS raceName FROM race;
 SELECT class_id AS classId, class_name AS className FROM class;
 

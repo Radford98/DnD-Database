@@ -1,3 +1,4 @@
 app/node_modules/
 **/.vs
 app/dbcon.js
+app/package-lock.json

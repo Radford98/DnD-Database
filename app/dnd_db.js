@@ -38,6 +38,8 @@ app.use('/manageSpecials', require('./specials.js'));
 
 app.use('/manageCharacters', require('./characters.js'));
 
+app.use('/manageRaces', require('./races.js'));
+
 
 app.get('/managePlayers', function(req, res, next) {
     var context = {};
@@ -75,9 +77,6 @@ app.get('/managePlayers', function(req, res, next) {
     res.render('managePlayers', context);
 });
 
-app.get('/manageRaces', function(req, res) {
-    res.render('manageRaces');
-});
 
 app.get('/updateCharacter', function(req, res) {
     res.render('updateCharacter');

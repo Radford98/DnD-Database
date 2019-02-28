@@ -21,6 +21,8 @@ router.get('/', function (req, res) {
 router.post('/', function (req, res) {
     var mysql = req.app.get('mysql');
     var sql = 'INSERT INTO class (class_name, hit_die, armor, saving_throw_1, saving_throw_2) VALUES (?,?,?,?,?)';
+    // Change armor to null if needed
+    if (req.body.armor_select == "0") { req.body.armor_select = NULL };
     var inserts = [req.body.class_name, req.body.hd_select, req.body.armor_select, req.body.saving_throw_1_select, req.body.saving_throw_2_select];
     mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {

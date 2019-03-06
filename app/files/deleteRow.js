@@ -3,6 +3,9 @@ function deleteRow(table, id) {
     var url = '/manage' + table + '/' + id;
 
     XHR.open('DELETE', url, true);
+    XHR.addEventListener('load', () => {
+        window.location.reload(true);
+    })
     XHR.send();
 
 }

@@ -41,7 +41,7 @@ router.delete('/:id', function (req, res) {
             res.write(JSON.stringify(error));
             res.end();
         } else {
-            res.redirect('/manageSpecials');
+            res.status(202).end();
         }
     });
 });

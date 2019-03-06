@@ -27,8 +27,12 @@ router.get('/:id', function (req, res) {
             res.write(JSON.stringify(error));
             res.end();
         } else {
+            console.log('---------------');
             context.special = results[0];
-            console.log(context.special);
+            console.log(results);
+            console.log('---');
+            console.log(results[0]);
+            console.log('---');
             res.render('updateSpecial', context);
         }
     })

@@ -7,7 +7,7 @@ function deleteRow(table, id) {
     XHR.open('DELETE', url, true);
     XHR.addEventListener('load', () => {
         window.location.reload(true);
-    })
+    });
     XHR.send();
 
-}
+};

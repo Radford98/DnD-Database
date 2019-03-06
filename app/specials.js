@@ -60,7 +60,7 @@ router.put('/:id', function (req, res) {
         } else {
             var current = results[0];
             var sql2 = "UPDATE special SET special_name = ?, special_description = ? WHERE special_id = ?";
-            var inserts = [req.body.special_name || current.special_name, req.body.special_description || current.special_description];
+            var inserts = [req.body.special_name || current.special_name, req.body.special_description || current.special_description, req.params.id];
 
             mysql.pool.query(sql2, inserts, function (error, results, fields) {
                 if (error) {
@@ -68,9 +68,8 @@ router.put('/:id', function (req, res) {
                     res.write(JSON.stringify(error));
                     res.end();
                 } else {
-                    //res.status(200);
-                    //res.end();
-                    res.redirect('/manageSpecials');
+                    res.status(200);
+                    res.end();
                 }
             });
         }

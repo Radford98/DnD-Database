@@ -1,7 +1,7 @@
 <h1>Update Special Attribute: {{special_name}}</h1>
 
 <div>
-  <form id="updateSpecial" action="" method="put">
+  <form id="updateSpecial">
     <fieldset>
       <legend><h3>Enter new information for {{special_name}}</h3></legend>
         <!-- This is for demo purposes. Production will populate lists from
@@ -13,10 +13,10 @@
 
         <label for="special_description">Special Description:</label>
         <textarea id="special_description" name="special_description"
-                  rows="5" cols="30" maxlength="255" form="addSpecial" required>{{special_description}}</textarea>
+                  rows="5" cols="30" maxlength="255" form="updateSpecial" required>{{special_description}}</textarea>
         <br/>
 
-        <input type="submit" value="Update Special" id="updateSpecial" class="btn">
+        <button onclick="updateRow('Specials', {{id}}, 'updateSpecial')">Update</button>
     </fieldset>
   </form>
 </div>

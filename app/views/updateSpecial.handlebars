@@ -1,4 +1,4 @@
-<h1>Update Special Attribute: {{special.special_name}}</h1>
+<h1>Update Special Attribute: {{special_name}}</h1>
 
 <div>
   <form id="updateSpecial">
@@ -12,8 +12,8 @@
         <br/>
 
         <label for="special_description">Special Description:</label>
-          <textarea id="special_description" name="special_description"
-                    rows="5" cols="30" maxlength="255" form="addSpecial" value="{{special_description}}"required></textarea>
+        <textarea id="special_description" name="special_description"
+                  rows="5" cols="30" maxlength="255" form="addSpecial" required>{{special_description}}</textarea>
         <br/>
 
         <input type="submit" value="Update Special" id="updateSpecial" class="btn">

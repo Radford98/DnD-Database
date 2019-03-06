@@ -1,10 +1,40 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <title>D&D Database</title>
+    <style>
+        #navBar {
+            background-color: lightblue;
+            position: relative;
+            left: 50%;
+            width: 800px;
+            margin-left: -400px;
+            height: 50px;
+            margin-top: 10px;
+        }
+
+        .navElement {
+            position: relative;
+            top: 17px;
+            display: inline;
+            margin-left: 10px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
+    <div id="navBar">
+        <ul>
+            <li class="navElement"> <a href="./">Home</a></li>
+            <li class="navElement"> <a href="./managePlayers">Manage Players</a></li>
+            <li class="navElement"> <a href="./manageCharacters">Manage Characters</a></li>
+            <li class="navElement"> <a href="./manageRaces">Manage Races</a></li>
+            <li class="navElement"> <a href="./manageClasses">Manage Classes</a></li>
+            <li class="navElement"> <a href="./manageSpecials">Manage Specials</a></li>
+        </ul>
+    </div>
     {{{body}}}
 </body>
 </html>

@@ -27,6 +27,7 @@ router.get('/:id', function (req, res) {
             res.write(JSON.stringify(error));
             res.end();
         } else {
+            context.special = results[0];
             res.render('updateSpecial', context.special);
         }
     })
@@ -67,8 +68,9 @@ router.put('/:id', function (req, res) {
                     res.write(JSON.stringify(error));
                     res.end();
                 } else {
-                    res.status(200);
-                    res.end();
+                    //res.status(200);
+                    //res.end();
+                    res.redirect('/manageSpecials');
                 }
             });
         }

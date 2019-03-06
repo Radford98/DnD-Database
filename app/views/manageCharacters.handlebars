@@ -77,28 +77,20 @@
       </thead>
       <tbody>
         {{#each characters}}
-        <tr>
-          <td hidden> {{this.id}} </td>
-          <td> {{this.playerName}} </td>
-          <td> {{this.characterName}} </td>
-          <td> {{this.race}} </td>
-          <td>
-<!--            <ul>              {{#each classes}}              <li>{{this.class}}: Level {{this.level}}</li>              {{/each}}            </ul>      -->
-              {{this.primaryClass}}
-          </td>
-            <td> {{this.levels}}</td>
-          <td> {{this.background}} </td>
-          <td>
-            <form>
-              <input type="submit" value="Delete" class="btn">
-            </form>
-          </td>
-          <td>
-            <form>
-              <input type="submit" value="Update" class="btn">
-            </form>
-          </td>
-        </tr>
+          <tr>
+              <td hidden> {{this.id}} </td>
+              <td> {{this.playerName}} </td>
+              <td> {{this.characterName}} </td>
+              <td> {{this.race}} </td>
+              <td>
+                  <!--            <ul>              {{#each classes}}              <li>{{this.class}}: Level {{this.level}}</li>              {{/each}}            </ul>      -->
+                  {{this.primaryClass}}
+              </td>
+              <td> {{this.levels}}</td>
+              <td> {{this.background}} </td>
+              <td><button onclick="./manageCharacters/{{id}}">Update</button></td>
+              <td><button onclick="deleteRow('Characters', {{id}})">Delete</button></td>
+          </tr>
         {{/each}}
       </tbody>
     </table>

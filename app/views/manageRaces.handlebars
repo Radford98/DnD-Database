@@ -68,26 +68,23 @@
       </thead>
       <tbody>
         {{#each races}}
-        <tr>
-          <td hidden> {{this.id}} </td>
-          <td> {{this.raceName}} </td>
-          <td> {{this.lifespan}} </td>
-          <td> {{this.height}} </td>
-          <td> {{this.weight}} </td>
-          <td> {{this.speed}} </td>
-          <td>
-            <ul>
-              {{#each specials}}
-              <li>{{this.special}}</li>
-              {{/each}}
-            </ul>
-          </td>
-          <td>
-            <form>
-              <input type="submit" value="Update" class="btn">
-            </form>
-          </td>
-        </tr>
+          <tr>
+              <td hidden> {{this.id}} </td>
+              <td> {{this.raceName}} </td>
+              <td> {{this.lifespan}} </td>
+              <td> {{this.height}} </td>
+              <td> {{this.weight}} </td>
+              <td> {{this.speed}} </td>
+              <td>
+                  <ul>
+                      {{#each specials}}
+                      <li>{{this.special}}</li>
+                      {{/each}}
+                  </ul>
+              </td>
+              <td><button onclick="./manageRaces/{{id}}">Update</button></td>
+              <td><button onclick="deleteRow('Races', {{id}})">Delete</button></td>
+          </tr>
         {{/each}}
       </tbody>
     </table>

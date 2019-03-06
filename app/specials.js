@@ -21,7 +21,7 @@ router.get('/:id', function (req, res) {
     var context = {};
     var mysql = req.app.get('mysql');
 
-    mysql.pool.query('SELECT special_id, special_name, special_description FROM special', function (error, results, fields) {
+    mysql.pool.query('SELECT special_id, special_name, special_description FROM special WHERE special_id = ?', [req.params.id], function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error));
             res.write(JSON.stringify(error));

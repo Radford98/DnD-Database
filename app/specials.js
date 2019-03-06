@@ -13,6 +13,7 @@ router.get('/', function (req, res) {
             res.end();
         }
         context.specials = results;
+        console.log(context.specials);
         res.render('manageSpecials', context);
     });
 });
@@ -29,7 +30,7 @@ router.get('/:id', function (req, res) {
         } else {
             console.log('---------------');
             context.special = results[0];
-            console.log(special);
+            console.log(context.special);
             console.log('---------------');
             res.render('updateSpecial', context);
         }

@@ -41,7 +41,7 @@
         <select id="special_select">
               <option value="">--Select a special attribute--</option>
               {{#each specials}}
-              <option value="{{specialId}}">{{special}}</option>
+              <option value="{{special_id}}">{{special}}</option>
               {{/each}}
           </select>
           <br/>
@@ -82,7 +82,11 @@
                       {{/each}}
                   </ul>
               </td>
-              <td><button onclick="./manageRaces/{{id}}">Update</button></td>
+              <td>
+                  <form action="/manageRaces/{{id}}" method="get">
+                      <input type="submit" value="Update" />
+                  </form>
+              </td>
               <td><button onclick="deleteRow('Races', {{id}})">Delete</button></td>
           </tr>
         {{/each}}

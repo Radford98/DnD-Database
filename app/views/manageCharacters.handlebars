@@ -86,7 +86,11 @@
               </td>
               <td> {{this.levels}}</td>
               <td> {{this.background}} </td>
-              <td><button onclick="./manageCharacters/{{id}}">Update</button></td>
+              <td>
+                  <form action="/manageCharacters/{{id}}" method="get">
+                      <input type="submit" value="Update" />
+                  </form>
+              </td>
               <td><button onclick="deleteRow('Characters', {{id}})">Delete</button></td>
           </tr>
         {{/each}}

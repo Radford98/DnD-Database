@@ -134,6 +134,36 @@ router.post('/', function (req, res) {
     });
 });
 
+// Commit updates to DB
+router.put('/:id', function (req, res) {
+    var mysql = req.app.get('mysql');
+    let sql = 'SELECT character_name, player_id, race_id, background FROM characters WHERE character_id = ?';
+
+    mysql.pool.query(sql, [req.params.id], function (error, results, fields) {
+        if (error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            var current = results[0];
+            let sql = 'UPDATE characters SET character_name = ?, player_id = ?, race_id = ?, background = ? WHERE character_id = ?';
+            var inserts = [req.body.character_name || current.character_name, req.body.player_select || current.player_id, req.body.race_select || current.race_id, req.body.background || current.background, req.params.id];
+
+            mysql.pool.query(sql, inserts, function (error, results, fields) {
+                if (error) {
+                    console.log(JSON.stringify(error));
+                    res.write(JSON.stringify(error));
+                    res.end();
+                } else {
+                    res.status(200);
+                    res.end();
+                }
+            });
+        }
+    });
+});
+
+
 router.delete('/:id', function (req, res) {
     var mysql = req.app.get('mysql');
     var sql = "DELETE FROM characters WHERE character_id= ?";

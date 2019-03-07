@@ -57,7 +57,12 @@ SELECT C.character_id AS characterId, CONCAT(P.player_first_name, " ", P.player_
 -- Probably this one:
 SELECT C.character_id AS characterId, C.player_id AS playerId, C.character_name AS characterName, C.race_id AS raceID, C.background AS background FROM characters WHERE character_id = ?;
 
--- update character
+-- Partial character update
+-- First select previous values
+SELECT character_name, player_id, race_id, background FROM characters WHERE character_id = ?
+-- Update those values
+UPDATE characters SET character_name = ?, player_id = ?, race_id = ?, background = ? WHERE character_id = ?;
+
 UPDATE characters SET player_id = :selected_player_id, character_name = :name, race_id = :race, background = :background WHERE character_id = :selected_character_id;
 
 -- delete character

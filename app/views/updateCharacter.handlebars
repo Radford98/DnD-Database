@@ -20,7 +20,7 @@
         <label for="race_select">Race:</label>
             <select id="race_select" name="race_select" required>
                 {{#each races}}
-                    <option value="{{raceID}}">{{raceName}}</option>
+                    <option value="{{raceId}}">{{raceName}}</option>
                 {{/each}}
             </select>
         <br />
@@ -39,20 +39,22 @@
               <th hidden></th>
               <th> Class </th>
               <th> Level </th>
+              <th> Primary Class</th>
               <th> </th>
             </tr>
           </thead>
           <tbody>
-            {{#each classes}}
+            {{#each charClasses}}
             <tr>
-              <td hidden> {{class_id}}</td>
-              <td> {{class_name}} </td>
+              <td hidden> {{classId}}</td>
+              <td> {{className}} </td>
               <td>
                 <input type="number" class="inputField" min="1" value="{{level}}">
               </td>
               <td>
                 <input type="submit" value="Update Level" id="updateLevel" class="btn">
               </td>
+                <td>{{primaryClass}}</td>
             </tr>
             {{/each}}
           </tbody>
@@ -63,7 +65,7 @@
         <select id="class_select">
               <option value="">--Select a class--</option>
               {{#each classes}}
-              <option value="{{classId}}">{{class}}</option>
+              <option value="{{classId}}">{{className}}</option>
               {{/each}}
           </select>
         <br/>

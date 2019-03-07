@@ -69,7 +69,7 @@ UPDATE characters SET player_id = :selected_player_id, character_name = :name, r
 DELETE FROM characters WHERE character_id = :selected_id;
 
 -- display character-class relationship
-SELECT CH.character_name AS "Character", CL.class_name AS "Class", CC.levels AS "Levels", CC.primary_class AS "Primary Class" FROM characters CH INNER JOIN characters_class CC ON CH.character_id = CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id;
+SELECT CL.class_id AS classId, CL.class_name AS className, CC.levels AS level, CC.primary_class AS primaryClass FROM characters CH INNER JOIN characters_class CC ON CH.character_id = CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id WHERE CH.character_id = ?;
 
 -- drop down menu for updating classes that the character already has
 SELECT class_name FROM class C INNER JOIN characters_class CC ON C.class_id = CC.class_id WHERE CC.character_id = :selected_id;

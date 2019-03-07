@@ -1,11 +1,11 @@
-<h1>Update {{characterName}}</h1>
+<h1>Update {{character.characterName}}</h1>
 
 <div>
   <form id="updateCharacter">
     <fieldset>
-      <legend><h3>Enter new information for {{characterName}}</h3></legend>
+      <legend><h3>Enter new information for {{character.characterName}}</h3></legend>
         <label for="character_name">Character Name:
-          <input type="text" class="inputField" name="character_name" id="character_name" size="100" maxlength="100" value="{{characterName}}" required>
+          <input type="text" class="inputField" name="character_name" id="character_name" size="100" maxlength="100" value="{{character.characterName}}" required>
         </label>
         <br/>
 
@@ -25,11 +25,11 @@
             </select>
 
         <label for="background">Character Background:
-            <input type="text" class="inputField" name="background" id="background" size="100" maxlength="100" wrap value="{{background}}" required>
+            <input type="text" class="inputField" name="background" id="background" size="100" maxlength="100" wrap value="{{character.background}}" required>
         </label>
         <br/>
 
-        <button onclick="updateRow('Characters', {{characterId}}, '#updateCharacter')">Update</button>
+        <button onclick="updateRow('Characters', {{character.characterId}}, '#updateCharacter')">Update</button>
         <br/>
 
         <table>

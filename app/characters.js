@@ -70,12 +70,12 @@ function getUpdateChar(req, res, mysql, context, complete) {
 
 }
 
-
+// manageCharacters
 router.get('/', function (req, res) {
     var mysql = req.app.get('mysql');
     var callbackCount = 0;
     var context = {};
-    getPlayers(req, res, mysql, context, complete);
+    getPlayers(res, mysql, context, complete);
     getRaces(res, mysql, context, complete);
     getClasses(res, mysql, context, complete);
     getCharacters(res, mysql, context, complete);
@@ -89,12 +89,13 @@ router.get('/', function (req, res) {
     }
 });
 
+// updateCharacters
 router.get('/:id', function (req, res) {
     var context = {};
     var mysql = req.app.get('mysql');
     var callbackCount = 0;
     
-    getUpdateChar(res, mysql, context, complete);
+    getUpdateChar(req, res, mysql, context, complete);
     getPlayers(res, mysql, context, complete);
     getRaces(res, mysql, context, complete);
 

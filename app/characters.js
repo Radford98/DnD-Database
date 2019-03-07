@@ -55,9 +55,9 @@ function getCharacters(res, mysql, context, complete) {
 
 // Single character for update page --> context
 // Needs to be called FIRST
-function getUpdateChar(id, res, mysql, context, complete) {
+function getUpdateChar(req, res, mysql, context, complete) {
     sql = 'SELECT C.character_id AS characterId, C.player_id AS playerId, C.character_name AS characterName, C.race_id AS raceID, C.background AS background FROM characters WHERE character_id = ?';
-    mysql.pool.query(sql, id, function (error, results, fields) {
+    mysql.pool.query(sql, [req.params.id], function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error));
             res.write(JSON.stringify(error));
@@ -75,7 +75,7 @@ router.get('/', function (req, res) {
     var mysql = req.app.get('mysql');
     var callbackCount = 0;
     var context = {};
-    getPlayers([req.params.id], res, mysql, context, complete);
+    getPlayers(req, res, mysql, context, complete);
     getRaces(res, mysql, context, complete);
     getClasses(res, mysql, context, complete);
     getCharacters(res, mysql, context, complete);

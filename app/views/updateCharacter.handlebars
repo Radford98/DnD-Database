@@ -45,17 +45,18 @@
           </thead>
           <tbody>
             {{#each charClasses}}
-            <tr>
-              <td hidden> {{classId}}</td>
-              <td> {{className}} </td>
-              <td>
-                <input type="number" class="inputField" min="1" value="{{level}}">
-              </td>
-              <td>
-                <input type="submit" value="Update Level" id="updateLevel" class="btn">
-              </td>
-                <td>{{primaryClass}}</td>
-            </tr>
+              <tr>
+                  <td hidden> {{classId}}</td>
+                  <td> {{className}} </td>
+                  <td>
+                      <input type="number" class="inputField" min="1" value="{{level}}">
+                  </td>
+                  <td>{{primaryClass}}</td>
+                  <td>
+                      <input type="submit" value="Update Level" id="updateLevel" class="btn">
+                  </td>
+
+              </tr>
             {{/each}}
           </tbody>
         </table>

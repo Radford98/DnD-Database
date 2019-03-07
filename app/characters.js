@@ -115,7 +115,7 @@ router.get('/:id', function (req, res) {
     getPlayers(res, mysql, context, complete);
     getRaces(res, mysql, context, complete);
     getClasses(res, mysql, context, complete);
-    getCharClasses(req, res, mysql, context, compete);
+    getCharClasses(req, res, mysql, context, complete);
 
     function complete() {
         callbackCount++;

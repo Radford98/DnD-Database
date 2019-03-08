@@ -40,42 +40,7 @@ app.use('/manageCharacters', require('./characters.js'));
 
 app.use('/manageRaces', require('./races.js'));
 
-
-app.get('/managePlayers', function(req, res, next) {
-    var context = {};
-    
-// This context entry is for demo purposes. Actual context data will
-// be supplied from the db
-    context.players = 
-        [
-            {
-                id: 1,
-                first_name: "Edwin",
-                last_name: "Tulmer",
-                dm: "Bardo the Just"
-            },
-            {
-                id: 2,
-                first_name: "Dustin",
-                last_name: "DeWind",
-                dm: "Bardo the Just"
-            }
-        ];
-    context.dm =
-        [
-            {
-                dmId: "dm_1", 
-                dm: "Edwin Tulmer"
-            },
-            {
-                dmId: "dm_2",
-                dm: "Bardo the Just"
-            }
-        ];
-// End of demo data
-
-    res.render('managePlayers', context);
-});
+app.use('/managePlayers', require('./players.js'));
 
 
 app.get('/updateCharacter', function(req, res) {

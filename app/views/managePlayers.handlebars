@@ -22,7 +22,7 @@
           </label>
           <br/>
           <label for="dm_select"> Dungeon Master:</label>
-          <select id="dm_select" name="dm_select">
+          <select id="dm_select" name="dm_select" required>
             <option value="">--Choose an available DM--</option>
             {{#each dms}}
             <option value="{{dmId}}">{{dmName}}</option>

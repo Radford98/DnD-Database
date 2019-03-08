@@ -18,8 +18,12 @@ function getRaces(res, mysql, context, complete) {
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            //console.log(results);
             var raceSpecials = results;
+
+            /* The following takes the races returned from the database as an
+             * object, adds a property called "specials" as an array, then
+             * adds the specials for that race to its specials property
+             */
             context.races.forEach( function (race) {
                 race.specials = [];
                 raceSpecials.forEach( function (special) {
@@ -28,7 +32,7 @@ function getRaces(res, mysql, context, complete) {
                     }
                 });
             });
-            console.log(context.races);
+
         });
         complete();
     });

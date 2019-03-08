@@ -12,7 +12,7 @@ function getRaces(res, mysql, context, complete) {
             res.end();
         }
         context.races = results;
-        console.log(context.races);
+
         mysql.pool.query('SELECT race_special.race_id, race_special.special_id, special.special_name FROM race_special INNER JOIN special ON race_special.special_id = special.special_id', function (error, results, fields) {
             if (error) {
                 res.write(JSON.stringify(error));

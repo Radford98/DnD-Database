@@ -46,7 +46,7 @@
                 <tbody>
                     {{#each charClasses}}
                     <tr>
-                        <td hidden name="class_id"> {{classId}}</td>
+                        <td hidden> <input type="number" name="class_id" value="{{classId}}" /></td>    <!--Class ID entered as hidden input field so the information is pulled with jQuery's serialize()-->
                         <td class="class_name"> {{className}} </td>
                         <td>
                             <input type="number" name="class_level" class="inputField" min="1" value="{{level}}">

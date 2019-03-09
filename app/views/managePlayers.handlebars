@@ -51,9 +51,9 @@
         {{#each players}}
           <tr>
               <td hidden> {{this.id}} </td>
-              <td> {{this.first_name}} </td>
-              <td> {{this.last_name}} </td>
-              <td> {{this.dm}} </td>
+              <td> {{this.firstName}} </td>
+              <td> {{this.lastName}} </td>
+              <td> {{this.dmName}} </td>
               <td><button onclick="./managePlayers/{{id}}">Update</button></td>
               <td><button onclick="deleteRow('Players', {{id}})">Delete</button></td>
           </tr>

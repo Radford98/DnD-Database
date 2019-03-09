@@ -53,22 +53,28 @@ INSERT INTO characters (player_id, character_name, race_id, background) VALUES (
 INSERT INTO characters_class (character_id, class_id, levels, primary_class) VALUES (:results.insertId, :class_id, 1, 1);
 
 -- get a single character's data for the Update Character form
-SELECT C.character_id, P.player_first_name AS "Player", C.player_id, C.character_name, R.race_name AS "Race", C.race_id, C.background FROM characters C INNER JOIN race R ON C.race_id = R.race_id INNER JOIN player P ON P.player_id = C.player_id ORDER BY Player ASC;
+SELECT C.character_id AS characterId, C.player_id AS playerId, C.character_name AS characterName, C.race_id AS raceID, C.background AS background FROM characters WHERE character_id = ?;
 
--- update character
+-- Partial character update
+-- First select previous values
+SELECT character_name, player_id, race_id, background FROM characters WHERE character_id = ?
+-- Update those values
+UPDATE characters SET character_name = ?, player_id = ?, race_id = ?, background = ? WHERE character_id = ?;
 UPDATE characters SET player_id = :selected_player_id, character_name = :name, race_id = :race, background = :background WHERE character_id = :selected_character_id;
+-- Add a new class to an existing character
+INSERT INTO characters_class (character_id, class_id, levels, primary_class) VALUES (?, ?, 1, 0);
 
 -- delete character
 DELETE FROM characters WHERE character_id = :selected_id;
 
 -- display character-class relationship
-SELECT CH.character_name AS "Character", CL.class_name AS "Class", CC.levels AS "Levels", CC.primary_class AS "Primary Class" FROM characters CH INNER JOIN characters_class CC ON CH.character_id = CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id;
+SELECT CL.class_id AS classId, CL.class_name AS className, CC.levels AS level, CC.primary_class AS primaryClass FROM characters CH INNER JOIN characters_class CC ON CH.character_id = CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id WHERE CH.character_id = ?;
 
 -- drop down menu for updating classes that the character already has
 SELECT class_name FROM class C INNER JOIN characters_class CC ON C.class_id = CC.class_id WHERE CC.character_id = :selected_id;
 
 -- update character levels
-UPDATE characters_class SET levels = (levels+:value) WHERE character_id = :selected_character_id AND class_id = :selected_class_id;
+UPDATE characters_class SET levels = ?, primary_class = ? WHERE character_id = ? AND class_id = ?;
 
 -- drop down menu for adding new classes to a character
 SELECT class_name FROM class WHERE class_id NOT IN (SELECT C.class_id FROM class C INNER JOIN characters_class CC ON C.class_id = CC.class_id WHERE CC.character_id = :selected_id);

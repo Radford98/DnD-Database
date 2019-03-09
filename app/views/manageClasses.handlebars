@@ -84,23 +84,17 @@
       </thead>
       <tbody>
         {{#each classes}}
-        <tr>
-          <td hidden> {{this.id}} </td>
-          <td> {{this.className}} </td>
-          <td> {{this.hitDie}} </td>
-          <td> {{this.armor}} </td>
-          <td> {{this.savingThrow1}} </td>
-          <td> {{this.savingThrow2}} </td>
-          <td>
-            <form>
-              <input type="submit" value="Update" class="btn">
-            </form>
-          </td>
-        </tr>
+          <tr>
+              <td hidden> {{this.id}} </td>
+              <td> {{this.className}} </td>
+              <td> {{this.hitDie}} </td>
+              <td> {{this.armor}} </td>
+              <td> {{this.savingThrow1}} </td>
+              <td> {{this.savingThrow2}} </td>
+              <td><button onclick="./manageClasses/{{id}}">Update</button></td>
+              <td><button onclick="deleteRow('Classes', {{id}})">Delete</button></td>
+          </tr>
         {{/each}}
       </tbody>
     </table>
 </div>
-
-
-<a href="/">Home</a>

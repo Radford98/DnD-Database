@@ -1,24 +1,22 @@
-<h1>Update Special Attribute: {{this.special_name}}</h1>
+<h1>Update Special Attribute: {{special_name}}</h1>
 
 <div>
   <form id="updateSpecial">
     <fieldset>
-      <legend><h3>Enter new information for {{this.special_name}}</h3></legend>
+      <legend><h3>Enter new information for {{special_name}}</h3></legend>
         <!-- This is for demo purposes. Production will populate lists from
         database -->
         <label for="special_name">Special Name:
-          <input type="text" class="inputField" name="special_name" id="special_name" size="75" maxlength="50" value="{{this.special_name}}"required>
+          <input type="text" class="inputField" name="special_name" id="special_name" size="75" maxlength="50" value="{{special_name}}"required>
         </label>
         <br/>
 
         <label for="special_description">Special Description:</label>
-          <textarea id="special_description" name="special_description"
-                    rows="5" cols="30" maxlength="255" form="addSpecial" value="{{this.special_description}}"required></textarea>
+        <textarea id="special_description" name="special_description"
+                  rows="5" cols="30" maxlength="255" form="updateSpecial" required>{{special_description}}</textarea>
         <br/>
 
-        <input type="submit" value="Update Special" id="updateSpecial" class="btn">
+        <button onclick="updateRow('Specials', {{special_id}}, '#updateSpecial')">Update</button>
     </fieldset>
   </form>
 </div>
-
-<a href="/">Home</a>

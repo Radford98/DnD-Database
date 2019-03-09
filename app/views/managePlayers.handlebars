@@ -10,28 +10,26 @@
 </div>
 
 <div>
-    <form>
+    <form id="addPlayer" action="/managePlayers" method="post">
       <fieldset>
         <legend><h3>Add a player</h3></legend>
           <label for="first_name">First Name:
-            <input type="text" class="inputField" name="first_name" id="first_name" size="100" maxlength="100">
+            <input type="text" class="inputField" name="first_name" id="first_name" size="100" maxlength="100" required>
           </label>
           <br/>
           <label for="last_name">Last Name:
-            <input type="text" class="inputField" name="last_name" id="last_name" size="100" maxlength="100">
+            <input type="text" class="inputField" name="last_name" id="last_name" size="100" maxlength="100" requied>
           </label>
           <br/>
-          <!-- This is for demo purposes. Production will populate list from
-            database -->
           <label for="dm_select"> Dungeon Master:</label>
-          <select id="dm_select">
+          <select id="dm_select" name="dm_select" required>
             <option value="">--Choose an available DM--</option>
-            {{#each dm}}
-            <option value="{{dmId}}">{{dm}}</option>
+            {{#each dms}}
+            <option value="{{dmId}}">{{dmName}}</option>
             {{/each}}
           </select>
           <br/>
-          <input type="submit" id="addPlayer">
+          <input type="submit" id="addPlayer" value="Add Player" class="btn">
       </fieldset>
     </form>
 </div>

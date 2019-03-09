@@ -9,44 +9,44 @@
 </div>
 
 <div>
-  <form>
+  <form id="addRace" action="/manageRaces" method="post">
     <fieldset>
       <legend><h3>Add a race</h3></legend>
-        <label for="character_name">Race Name:
-          <input type="text" class="inputField" name="race_name" id="race_name" size="10" maxlength="10">
+        <label for="race_name">Race Name:
+          <input type="text" class="inputField" name="race_name" id="race_name" size="10" maxlength="10" required>
         </label>
         <br/>
 
         <label for="lifespan">Lifespan (years):
-          <input type="number" class="inputField" name="lifespan" id="lifespan" min="-1">
+          <input type="number" class="inputField" name="lifespan" id="lifespan" min="-1" required>
         </label>
         <br/>
 
         <label for="height">Height (meters):
-          <input type="number" class="inputField" name="height" id="height" min="0" step="0.01">
+          <input type="number" class="inputField" name="height" id="height" min="0" step="0.01" required>
         </label>
         <br/>
 
         <label for="weight">Weight (kilograms):
-          <input type="number" class="inputField" name="weight" id="weight" min="0" step="0.01">
+          <input type="number" class="inputField" name="weight" id="weight" min="0" step="0.01" required>
         </label>
         <br/>
 
         <label for="speed">Speed:
-          <input type="number" class="inputField" name="speed" id="speed" min="0" step="0.01">
+          <input type="number" class="inputField" name="speed" id="speed" min="0" step="0.01" required>
         </label>
         <br/>
 
         <label for="special_select">Special:</label>
-        <select id="special_select">
+        <select id="special_select" name="special_select">
               <option value="">--Select a special attribute--</option>
               {{#each specials}}
-              <option value="{{special_id}}">{{special}}</option>
+                 <option value="{{special_id}}">{{special}}</option>
               {{/each}}
           </select>
           <br/>
 
-        <input type="submit" value="Add Character" id="addCharacter" class="btn">
+        <input type="submit" value="Add Race" id="addRace" class="btn">
     </fieldset>
   </form>
 </div>
@@ -77,9 +77,9 @@
               <td> {{this.speed}} </td>
               <td>
                   <ul>
-                      {{#each specials}}
-                      <li>{{this.special}}</li>
-                      {{/each}}
+                   {{#each this.specials}}
+                     <li> {{this}} </li>
+                   {{/each}}
                   </ul>
               </td>
               <td>

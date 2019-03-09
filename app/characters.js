@@ -174,8 +174,34 @@ router.put('/:id', function (req, res) {
                     res.write(JSON.stringify(error));
                     res.end();
                 } else {
-                    res.status(200);
-                    res.end();
+                    console.log("-------");
+                    console.log(req.body.class_id);
+                    console.log(req.body.class_level);
+
+                    // Update each of the classes
+                    let sql = 'UPDATE characters_class SET levels = ?, primary_class = ? WHERE character_id = ? AND class_id = ?';
+                    var max = Math.max(...req.body.class_level);
+                    var primeCheck = 0;
+                    req.body.class_id.forEach(function (element, index) {
+                        var primary = '0';
+                        if (primeCheck == 0 && req.body.class_level[index] == max) {
+                            primary = '1';
+                            primeCheck = 1;
+                        }
+                        var inserts = [req.body.class_level[index], primary, req.params.id, element];
+                        console.log(inserts);
+                        console.log("-----");
+                        mysql.pool.query(sql, inserts, function(error, results, fields){
+                            if (error) {
+                                console.log(JSON.stringify(error));
+                                res.write(JSON.stringify(error));
+                                res.end();
+                            } else{
+                                res.status(200);
+                                res.end();
+                            }
+                        });
+                   });
                 }
             });
         }

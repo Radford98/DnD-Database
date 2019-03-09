@@ -75,7 +75,7 @@ SELECT CL.class_id AS classId, CL.class_name AS className, CC.levels AS level, C
 SELECT class_name FROM class C INNER JOIN characters_class CC ON C.class_id = CC.class_id WHERE CC.character_id = :selected_id;
 
 -- update character levels
-UPDATE characters_class SET levels = (levels+:value) WHERE character_id = :selected_character_id AND class_id = :selected_class_id;
+UPDATE characters_class SET levels = ?, primary_class = ? WHERE character_id = ? AND class_id = ?;
 
 -- drop down menu for adding new classes to a character
 SELECT class_name FROM class WHERE class_id NOT IN (SELECT C.class_id FROM class C INNER JOIN characters_class CC ON C.class_id = CC.class_id WHERE CC.character_id = :selected_id);

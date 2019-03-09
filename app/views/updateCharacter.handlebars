@@ -1,77 +1,79 @@
 <h1>Update {{character.characterName}}</h1>
 
 <div>
-  <form id="updateCharacter">
-    <fieldset>
-      <legend><h3>Enter new information for {{character.characterName}}</h3></legend>
-        <label for="character_name">Character Name:
-          <input type="text" class="inputField" name="character_name" id="character_name" size="100" maxlength="100" value="{{character.characterName}}" required>
-        </label>
-        <br/>
+    <form id="updateCharacter">
+        <fieldset>
+            <legend><h3>Enter new information for {{character.characterName}}</h3></legend>
+            <label for="character_name">
+                Character Name:
+                <input type="text" class="inputField" name="character_name" id="character_name" size="100" maxlength="100" value="{{character.characterName}}" required>
+            </label>
+            <br />
 
-        <label for="player_select">Player:</label>
+            <label for="player_select">Player:</label>
             <select id="player_select" name="player_select" required>
                 {{#each players}}
-                    <option value="{{playerId}}">{{playerName}}</option>
+                <option value="{{playerId}}">{{playerName}}</option>
                 {{/each}}
             </select>
-        <br />
+            <br />
 
-        <label for="race_select">Race:</label>
+            <label for="race_select">Race:</label>
             <select id="race_select" name="race_select" required>
                 {{#each races}}
-                    <option value="{{raceId}}">{{raceName}}</option>
+                <option value="{{raceId}}">{{raceName}}</option>
                 {{/each}}
             </select>
-        <br />
+            <br />
 
-        <label for="background">Character Background:
-            <input type="text" class="inputField" name="background" id="background" size="100" maxlength="100" wrap value="{{character.background}}" required>
-        </label>
-        <br/>
+            <label for="background">
+                Character Background:
+                <input type="text" class="inputField" name="background" id="background" size="100" maxlength="100" wrap value="{{character.background}}" required>
+            </label>
+            <br />
 
-        <button onclick="updateRow('Characters', {{character.characterId}}, '#updateCharacter')">Update</button>
-        <br/>
+            <br />
 
-        <table>
-          <thead>
-            <tr>
-              <th hidden></th>
-              <th> Class </th>
-              <th> Level </th>
-              <th> Primary Class</th>
-              <th> </th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each charClasses}}
-              <tr>
-                  <td hidden> {{classId}}</td>
-                  <td> {{className}} </td>
-                  <td>
-                      <input type="number" class="inputField" min="1" value="{{level}}">
-                  </td>
-                  <td>{{primaryClass}}</td>
-                  <td>
-                      <input type="submit" value="Update Level" id="updateLevel" class="btn">
-                  </td>
+            <table>
+                <thead>
+                    <tr>
+                        <th hidden></th>
+                        <th> Class </th>
+                        <th> Level </th>
+                        <th> Primary Class</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each charClasses}}
+                    <tr>
+                        <td hidden name="class_id"> {{classId}}</td>
+                        <td class="class_name"> {{className}} </td>
+                        <td>
+                            <input type="number" name="class_level" class="inputField" min="1" value="{{level}}">
+                        </td>
+                        <td>{{primaryClass}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            <br />
 
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-        <br/>
+            <button onclick="updateRow('Characters', {{character.characterId}}, '#updateCharacter')">Update</button>
+        </fieldset>
+    </form>
 
-        <label for="class_select">Select a new class to add:</label>
-        <select id="class_select">
-              <option value="">--Select a class--</option>
-              {{#each classes}}
-              <option value="{{classId}}">{{className}}</option>
-              {{/each}}
-          </select>
-        <br/>
+    <form id="addClass">
+        <fieldset>
+            <label for="class_select">Select a new class to add:</label>
+            <select id="class_select">
+                <option value="">--Select a class--</option>
+                {{#each classes}}
+                <option value="{{classId}}">{{className}}</option>
+                {{/each}}
+            </select>
+            <br />
 
-        <input type="submit" value="Add Class" id="addClass" class="btn">
-    </fieldset>
-  </form>
+            <input type="submit" value="Add Class" id="addClass" class="btn">
+        </fieldset>
+    </form>
 </div>

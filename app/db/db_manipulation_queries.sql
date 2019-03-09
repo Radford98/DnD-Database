@@ -120,12 +120,11 @@ SELECT class_id AS id, class_name AS className, hit_die AS hitDie, armor AS armo
 INSERT INTO class (class_name, hit_die, armor, saving_throw_1, saving_throw_2) VALUES (:class, :die, :arm, :st1, :st2);
 
 -- get data for single class for update form
-SELECT class_id, class_name, hit_die, armor, saving_throw_1, saving_throw_2 FROM class WHERE class_id = :selected_id;
+SELECT class_id, class_name, hit_die, armor, saving_throw_1, saving_throw_2 FROM class WHERE class_id = ?;
 
 -- update a class
-UPDATE class
-SET class_name = :class, hit_die = :die, armor = :arm, saving_throw_1 = :st1, saving_throw_2 = :st2
-WHERE class_id = :selected_id;
+SELECT class_name, hit_die, armor, saving_throw_1, saving_throw_2 FROM class WHERE class_id = ?;
+UPDATE class SET class_name = ?, hit_die = ?, armor = ?, saving_throw_1 = ?, saving_throw_2 = ? WHERE class_id = ?;
 
 
 -- ------ Manage Specials ------ --

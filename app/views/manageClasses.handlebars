@@ -91,7 +91,11 @@
               <td> {{this.armor}} </td>
               <td> {{this.savingThrow1}} </td>
               <td> {{this.savingThrow2}} </td>
-              <td><button onclick="./manageClasses/{{id}}">Update</button></td>
+              <td>
+                  <form action="/manageClasses/{{id}}" method="get">
+                      <input type="submit" value="Update" />
+                  </form>
+              </td>
               <td><button onclick="deleteRow('Classes', {{id}})">Delete</button></td>
           </tr>
         {{/each}}

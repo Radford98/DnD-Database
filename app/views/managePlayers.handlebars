@@ -54,7 +54,11 @@
               <td> {{this.firstName}} </td>
               <td> {{this.lastName}} </td>
               <td> {{this.dmName}} </td>
-              <td><button onclick="./managePlayers/{{id}}">Update</button></td>
+              <td>
+                  <form action="/managePlayers/{{id}}" method="get">
+                      <input type="submit" value="Update" />
+                  </form>
+              </td>
               <td><button onclick="deleteRow('Players', {{id}})">Delete</button></td>
           </tr>
         {{/each}}

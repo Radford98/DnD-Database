@@ -25,7 +25,7 @@ app.use(express.static('files')); // For non-templated items (css, scripts...)
 
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
-app.set('port', 4733);      // 4733 for master
+app.set('port', 4731);      // 4733 for master
 app.set('mysql', mysql);
 
 app.get('/', function(req, res) {

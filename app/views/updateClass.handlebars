@@ -58,3 +58,15 @@
     </fieldset>
   </form>
 </div>
+
+
+
+<script defer>
+    function setSelect(field, id){
+        $(field).val(id);
+    }
+    setSelect("#hd_select", {{hid_die}});
+    setSelect("#armor_select", {{armor}});
+    setSelect("#saving_throw_1_select", {{saving_throw_1}});
+    setSelect("#saving_throw_2_select", {{saving_throw_2}});
+</script>

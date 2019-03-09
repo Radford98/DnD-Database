@@ -61,7 +61,7 @@ router.put('/:id', function (req, res) {
     var mysql = req.app.get('mysql');
     let sql = 'SELECT class_name, hit_die, armor, saving_throw_1, saving_throw_2 FROM class WHERE class_id = ?';
 
-    mysql.pool.query(sql, [req.params.id], function (error, reseults, fields) {
+    mysql.pool.query(sql, [req.params.id], function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error));
             res.write(JSON.stringify(error));

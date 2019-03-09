@@ -41,7 +41,7 @@
         <select id="special_select" name="special_select">
               <option value="">--Select a special attribute--</option>
               {{#each specials}}
-              <option value="{{specialId}}">{{specialName}}</option>
+                 <option value="{{special_id}}">{{special}}</option>
               {{/each}}
           </select>
           <br/>
@@ -68,29 +68,28 @@
       </thead>
       <tbody>
         {{#each races}}
-        <tr>
-          <td hidden> {{this.id}} </td>
-          <td> {{this.raceName}} </td>
-          <td> {{this.lifespan}} </td>
-          <td> {{this.height}} </td>
-          <td> {{this.weight}} </td>
-          <td> {{this.speed}} </td>
-          <td>
-            <ul>
-              {{#each this.specials}}
-              <li> {{this}} </li>
-              {{/each}}
-            </ul>
-          </td>
-          <td>
-            <form>
-              <input type="submit" value="Update" class="btn">
-            </form>
-          </td>
-        </tr>
+          <tr>
+              <td hidden> {{this.id}} </td>
+              <td> {{this.raceName}} </td>
+              <td> {{this.lifespan}} </td>
+              <td> {{this.height}} </td>
+              <td> {{this.weight}} </td>
+              <td> {{this.speed}} </td>
+              <td>
+                  <ul>
+                   {{#each this.specials}}
+                     <li> {{this}} </li>
+                   {{/each}}
+                  </ul>
+              </td>
+              <td>
+                  <form action="/manageRaces/{{id}}" method="get">
+                      <input type="submit" value="Update" />
+                  </form>
+              </td>
+              <td><button onclick="deleteRow('Races', {{id}})">Delete</button></td>
+          </tr>
         {{/each}}
       </tbody>
     </table>
 </div>
-
-<a href="/">Home</a>

@@ -5,6 +5,7 @@ var router = express.Router();
 
 // Helper funtions
 
+// Get the list of races and their special attributes
 function getRaces(res, mysql, context, complete) {
     mysql.pool.query('SELECT race_id as id, race_name as raceName, lifespan, height, weight, speed FROM race', function (error, results, fields) {
         if (error) {
@@ -38,6 +39,7 @@ function getRaces(res, mysql, context, complete) {
     });
 }
 
+// Get the list of specials for populating the specials selection dropdown list
 function getSpecials(res, mysql, context, complete) {
     mysql.pool.query('SELECT special_id AS specialId, special_name AS specialName FROM special', function (error, results, fields) {
         if (error) {
@@ -47,9 +49,23 @@ function getSpecials(res, mysql, context, complete) {
         context.specials = results;
         complete();
     });
-
 }
 
+// Get a single race data for the update view
+function getUpdateRace(req, res, mysql, context, complete) {
+    sql = 'SELECT race_id, race_name, lifespan, height, weight, speed FROM race WHERE race_id = ?';
+    mysql.pool.query(sql, [req.params.id], function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            context.race = results[0];
+            complete();
+        }
+    });
+}
+
+// manageRaces
 router.get('/', function (req, res) {
     var mysql = req.app.get('mysql');
     var context = {};
@@ -61,6 +77,24 @@ router.get('/', function (req, res) {
         callbackCount++;
         if (callbackCount >= 2) {
             res.render('manageRaces', context)
+        }
+    }
+});
+
+// updateRace
+router.get('/:id', function (req, res) {
+    var context = {};
+    var mysql = req.app.get('mysql');
+    var callbackCount = 0;
+
+    getUpdateRace(req, res, mysql, context, complete);
+    getRaces(res, mysql, context, complete);
+    getSpecials(res, mysql, context, complete);
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 3) {
+            res.render('updateRace', context);
         }
     }
 });

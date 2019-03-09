@@ -62,10 +62,10 @@
         </fieldset>
     </form>
 
-    <form id="addClass">
+    <form id="addClass" action="/manageCharacters/{{character.characterID}}">
         <fieldset>
             <label for="class_select">Select a new class to add:</label>
-            <select id="class_select">
+            <select id="class_select" name="class_select" required>
                 <option value="">--Select a class--</option>
                 {{#each classes}}
                 <option value="{{classId}}">{{className}}</option>

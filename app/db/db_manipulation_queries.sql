@@ -53,8 +53,6 @@ INSERT INTO characters (player_id, character_name, race_id, background) VALUES (
 INSERT INTO characters_class (character_id, class_id, levels, primary_class) VALUES (:results.insertId, :class_id, 1, 1);
 
 -- get a single character's data for the Update Character form
-SELECT C.character_id AS characterId, CONCAT(P.player_first_name, " ", P.player_last_name) AS playerName, C.player_id AS playerId, C.character_name AS characterName, R.race_name AS raceName, C.race_id AS raceID, C.background AS background FROM characters C INNER JOIN race R ON C.race_id = R.race_id INNER JOIN player P ON P.player_id = C.player_id ORDER BY Player ASC;
--- Probably this one:
 SELECT C.character_id AS characterId, C.player_id AS playerId, C.character_name AS characterName, C.race_id AS raceID, C.background AS background FROM characters WHERE character_id = ?;
 
 -- Partial character update
@@ -62,8 +60,9 @@ SELECT C.character_id AS characterId, C.player_id AS playerId, C.character_name 
 SELECT character_name, player_id, race_id, background FROM characters WHERE character_id = ?
 -- Update those values
 UPDATE characters SET character_name = ?, player_id = ?, race_id = ?, background = ? WHERE character_id = ?;
-
 UPDATE characters SET player_id = :selected_player_id, character_name = :name, race_id = :race, background = :background WHERE character_id = :selected_character_id;
+-- Add a new class to an existing character
+INSERT INTO characters_class (character_id, class_id, levels, primary_class) VALUES (?, ?, 1, 0);
 
 -- delete character
 DELETE FROM characters WHERE character_id = :selected_id;

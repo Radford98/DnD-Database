@@ -153,6 +153,23 @@ router.post('/', function (req, res) {
     });
 });
 
+// Add a new class to an existing character.
+router.post('/:id', function (req, res) {
+    var context = {};
+    var mysql = req.app.get('mysql');
+    var sql = 'INSERT INTO characters_class (character_id, class_id, levels, primary_class) VALUES (?, ?, 1, 0)';
+    var inserts = [req.params.id, req.body.class_select];
+    mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            console.log(JSON.stringify(error));
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/manageCharacters/' + req.params.id);
+        }
+    });
+});
+
 // Commit updates to DB
 router.put('/:id', function (req, res) {
     var mysql = req.app.get('mysql');
@@ -174,13 +191,10 @@ router.put('/:id', function (req, res) {
                     res.write(JSON.stringify(error));
                     res.end();
                 } else {
-                    console.log("-------");
-                    console.log(req.body.class_id);
-                    console.log(req.body.class_level);
-
                     // Update each of the classes
                     let sql = 'UPDATE characters_class SET levels = ?, primary_class = ? WHERE character_id = ? AND class_id = ?';
 
+                    // If character has multiple classes, update needs to process differently.
                     if (Array.isArray(req.body.class_id)) {
                         var max = Math.max(...req.body.class_level);
                         var primeCheck = 0;
@@ -191,8 +205,6 @@ router.put('/:id', function (req, res) {
                                 primeCheck = 1;
                             }
                             var inserts = [req.body.class_level[index], primary, req.params.id, element];
-                            console.log(inserts);
-                            console.log("-----");
                             mysql.pool.query(sql, inserts, function(error, results, fields){
                                 if (error) {
                                     console.log(JSON.stringify(error));

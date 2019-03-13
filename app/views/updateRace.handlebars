@@ -28,17 +28,31 @@
           <input type="number" class="inputField" name="speed" id="speed" min="0" step="0.01" value="{{race.speed}}" required>
         </label>
         <br/>
+        <br/>
 
-        <label for="special_select">Special:</label>
-        <select id="special_select">
+        <h3>Special Attributes</h3>
+        <ul>
+          {{#each race.raceSpecials}}
+          <li> {{this}} </li>
+          {{/each}}
+        </ul>
+
+        <button onclick="updateRow('Races', {{race.race_id}}, '#updateRace')">Update</button>
+    </fieldset>
+  </form>
+
+  <form id="addSpecial" action="/manageRaces/{{race.race_id}}" method="post">
+    <fieldset>
+        <label for="special_select">Choose special to add:</label>
+        <select id="special_select" name="special_select" required>
               <option value="">--Select a special attribute--</option>
               {{#each specials}}
-              <option value="{{special_id}}">{{specialName}}</option>
+              <option value="{{specialId}}">{{specialName}}</option>
               {{/each}}
           </select>
           <br/>
 
-        <button onclick="updateRow('Races', {{race.race_id}}, '#updateRace')">Update</button>
+          <input type="submit" value="Add Special" id="addSpecial" class="btn">
     </fieldset>
   </form>
 </div>

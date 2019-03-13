@@ -5,6 +5,7 @@ var router = express.Router();
 
 // Helper functions
 
+// Get the list of players and their assigned DM
 function getPlayers(res, mysql, context, complete) {
     mysql.pool.query('SELECT P.player_id AS id, P.player_first_name AS firstName, P.player_last_name AS lastName, D.player_first_name AS dmName FROM player P INNER JOIN player D ON P.dm = D.player_id', function (error, results, fields) {
         if (error) {
@@ -16,6 +17,7 @@ function getPlayers(res, mysql, context, complete) {
     });
 }
 
+// Get a list of players who are also DMs
 function getDMs(res, mysql, context, complete) {
     mysql.pool.query('SELECT player_id AS dmId, CONCAT(player_first_name, " ", player_last_name) as dmName FROM player WHERE player_id = dm', function (error, results, fields) {
         if (error) {
@@ -27,6 +29,28 @@ function getDMs(res, mysql, context, complete) {
     });
 }
 
+// Get a single player for the update view
+function getUpdatePlayer(req, res, mysql, context, complete) {
+    sql = 'SELECT player_id, player_first_name, player_last_name, dm FROM player WHERE player_id = ?';
+    mysql.pool.query(sql, [req.params.id], function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.player = results[0];
+
+        mysql.pool.query('SELECT player_id, CONCAT(player_first_name, " ", player_last_name) AS currentDM FROM player WHERE player_id = ?', [context.player.dm], function (error, results, fields) {
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.player.dm = results[0];
+        });
+        complete();
+    });
+}
+
+// managePlayers view
 router.get('/', function (req, res) {
     var mysql = req.app.get('mysql');
     var context = {};
@@ -43,6 +67,24 @@ router.get('/', function (req, res) {
     }
 });
 
+// updatePlayer view
+router.get('/:id', function (req, res) {
+    var context = {};
+    var mysql = req.app.get('mysql');
+    var callbackCount = 0;
+
+    getUpdatePlayer(req, res, mysql, context, complete);
+    getDMs(res, mysql, context, complete);
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 2) {
+            res.render('updatePlayer', context);
+        }
+    }
+
+});
+
+// Add a new player to the db
 router.post('/', function (req, res) {
     var context = {};
     var mysql = req.app.get('mysql');

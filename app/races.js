@@ -58,14 +58,28 @@ function getUpdateRace(req, res, mysql, context, complete) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
-        } else {
-            context.race = results[0];
-            complete();
         }
+        context.race = results[0];
+        
+        mysql.pool.query('SELECT race_special.race_id, race_special.special_id, special.special_name FROM race_special INNER JOIN special ON race_special.special_id = special.special_id', function (error, results, fields) {
+            if (error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            var raceSpecials = results;
+            context.race.raceSpecials = [];
+            raceSpecials.forEach (function (special) {
+                if (context.race.race_id == special.race_id) {
+                    context.race.raceSpecials.push(special.special_name);
+                }
+            });
+        });
+
+        complete();
     });
 }
 
-// manageRaces
+// manageRaces view
 router.get('/', function (req, res) {
     var mysql = req.app.get('mysql');
     var context = {};
@@ -81,7 +95,7 @@ router.get('/', function (req, res) {
     }
 });
 
-// updateRace
+// updateRace view
 router.get('/:id', function (req, res) {
     var context = {};
     var mysql = req.app.get('mysql');
@@ -99,6 +113,55 @@ router.get('/:id', function (req, res) {
     }
 });
 
+// Add a new special attribute to an existing race
+router.post('/:race_id', function (req, res) {
+    var context = {};
+    var mysql = req.app.get('mysql');
+    var sql = 'INSERT INTO race_special (race_id, special_id) VALUES (?,?)';
+    var inserts = [req.params.race_id, req.body.special_select];
+    mysql.pool.query(sql, inserts, function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/manageRaces/' + req.params.race_id);
+        }
+    });
+});
+
+// Commit updates to DB
+router.put ('/:race_id', function (req, res) {
+    var mysql = req.app.get('mysql');
+    let sql = 'SELECT race_id, race_name, lifespan, height, weight, speed FROM race WHERE race_id = ?';
+    mysql.pool.query(sql, [req.params.id], function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            var current = results[0];
+            let sql = 'UPDATE race SET race_name = ?, lifespan = ?, height = ?, weight = ?, speed = ? WHERE race_id = ?';
+            var inserts = [req.body.race_name || current.race_name, 
+                           req.body.lifespan || current.lifespan,
+                           req.body.height || current.height,
+                           req.body.weight || current.weight,
+                           req.body.speed || current.speed,
+                           req.params.race_id];
+
+            mysql.pool.query(sql, inserts, function (error, results, fields) {
+                if (error) {
+                    res.write(JSON.stringify(error));
+                    res.end();
+                } else {
+                    res.status(200);
+                    res.end();
+                }
+            });
+        }
+    });
+});
+
+
+// Add a new race to the db
 router.post('/', function (req, res) {
     var context = {};
     var mysql = req.app.get('mysql');

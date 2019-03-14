@@ -1,7 +1,7 @@
 <h1>Update Player: {{player.player_first_name}} {{player.player_last_name}}</h1>
 
 <div>
-    <form>
+    <form id="updatePlayer">
       <fieldset>
         <legend><h3>Enter new information for {{player.player_first_name}}</h3></legend>
 
@@ -17,8 +17,14 @@
 
           <p>Current Dungeon Master: {{player.dm.currentDM}}</p>
 
-          <label for="dm_select"> Dungeon Master: </label>
-          <select id="dm_select">
+          <button onclick="updateRow('Players', {{player.player_id}}, '#updatePlayer')">Update</button>
+      </fieldset>
+    </form>
+
+    <form id="changeDM" action="/managePlayers/{{player.player_id}}" method="post">
+      <fieldset>  
+          <label for="dm_select"> Select Dungeon Master: </label>
+          <select id="dm_select" name="dm_select" required>
             <option value="">--Choose an available DM--</option>
             {{#each dms}}
             <option value="{{dmId}}">{{dmName}}</option>
@@ -26,7 +32,7 @@
             <option value="">Self</option>
           </select>
           <br/>
-          <input type="submit" id="addPlayer">
+          <input type="submit" id="addPlayer" value="Change DM" class="btn">
       </fieldset>
     </form>
 </div>

@@ -76,13 +76,13 @@
         </select>
         <select id="sortRace" class="sortSelect" hidden>
             <option value="">--Select a Race--</option>
-            {{#each}}
+            {{#each races}}
                 <option value="{{raceId}}">{{raceName}}</option>
             {{/each}}
         </select>
         <select id="sortClass" class="sortSelect" hidden>
             <option value="">--Select a Class--</option>
-            {{#each}}
+            {{#each classes}}
                 <option value="{{classId}}">{{className}}</option>
             {{/each}}
         </select>

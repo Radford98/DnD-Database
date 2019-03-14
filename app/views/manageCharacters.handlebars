@@ -57,43 +57,71 @@
 </div>
 
 <div id="characterTable">
-  <h1>Characters</h1>
+    <h1>Characters</h1>
+    <div id="sortDiv">
+        <label for="sort">Sort by:</label>
+        <select id="sort" name="sort">
+            <option value="">--Select a sorting option--</option>
+            <option value="Player">Player</option>
+            <option value="Race">Race</option>
+            <option value="Class">Primary class</option>
+        </select>
+        <br />
+
+        <select id="sortPlayer" class="sortSelect" hidden>
+            <option value="">--Select a Player--</option>
+            {{#each players}}
+                <option value="{{playerId}}">{{playerName}}</option>
+            {{/each}}
+        </select>
+        <select id="sortRace" class="sortSelect" hidden>
+            <option value="">--Select a Race--</option>
+            {{#each}}
+                <option value="{{raceId}}">{{raceName}}</option>
+            {{/each}}
+        </select>
+        <select id="sortClass" class="sortSelect" hidden>
+            <option value="">--Select a Class--</option>
+            {{#each}}
+                <option value="{{classId}}">{{className}}</option>
+            {{/each}}
+        </select>
+
+    </div>
     <table>
-      <thead>
-        <tr>
-          <th hidden></th>
-          <th> Player Name </th>
-          <th> Character Name </th>
-          <th> Race </th>
- <!--         <th> Classes </th>    -->
-          <th> Primary Class </th>
-            <th> Level </th>
-          <th> Background </th>
-          <th> </th>
-          <th> </th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each characters}}
-          <tr>
-              <td hidden> {{this.id}} </td>
-              <td> {{this.playerName}} </td>
-              <td> {{this.characterName}} </td>
-              <td> {{this.race}} </td>
-              <td>
-                  <!--            <ul>              {{#each classes}}              <li>{{this.class}}: Level {{this.level}}</li>              {{/each}}            </ul>      -->
-                  {{this.primaryClass}}
-              </td>
-              <td> {{this.levels}}</td>
-              <td> {{this.background}} </td>
-              <td>
-                  <form action="/manageCharacters/{{id}}" method="get">
-                      <input type="submit" value="Update" />
-                  </form>
-              </td>
-              <td><button onclick="deleteRow('Characters', {{id}})">Delete</button></td>
-          </tr>
-        {{/each}}
-      </tbody>
+        <thead>
+            <tr>
+                <th hidden></th>
+                <th> Player Name </th>
+                <th> Character Name </th>
+                <th> Race </th>
+                <th> Primary Class </th>
+                <th> Level </th>
+                <th> Background </th>
+                <th> </th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each characters}}
+            <tr>
+                <td hidden> {{this.id}} </td>
+                <td> {{this.playerName}} </td>
+                <td> {{this.characterName}} </td>
+                <td> {{this.race}} </td>
+                <td>
+                    {{this.primaryClass}}
+                </td>
+                <td> {{this.levels}}</td>
+                <td> {{this.background}} </td>
+                <td>
+                    <form action="/manageCharacters/{{id}}" method="get">
+                        <input type="submit" value="Update" />
+                    </form>
+                </td>
+                <td><button onclick="deleteRow('Characters', {{id}})">Delete</button></td>
+            </tr>
+            {{/each}}
+        </tbody>
     </table>
 </div>

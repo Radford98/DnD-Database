@@ -59,8 +59,47 @@ function getCharClasses(req, res, mysql, context, complete) {
 
 // List of characters to fill out READ table --> context.characters
 function getCharacters(res, mysql, context, complete) {
-    sql = 'SELECT tbl1.character_id AS id, CONCAT(P.player_first_name, " ", P.player_last_name) AS playerName, tbl1.character_name AS characterName, R.race_name AS race, tbl2.class_name AS primaryClass, tbl1.Levels AS levels, tbl1.background AS background FROM (SELECT CH.character_id, CH.character_name, sum(CC.levels) AS Levels, CH.player_id, CH.race_id, CH.background FROM characters CH INNER JOIN characters_class CC ON CH.character_id = CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id GROUP BY CH.character_name) AS tbl1 INNER JOIN (SELECT CH.character_name, CL.class_name FROM characters CH INNER JOIN characters_class CC ON CH.character_id=CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id WHERE CC.primary_class = 1) AS tbl2 ON tbl1.character_name = tbl2.character_name INNER JOIN player P ON P.player_id = tbl1.player_id INNER JOIN race R on R.race_id = tbl1.race_id ORDER BY playerName ASC';
+    var sql = 'SELECT tbl1.character_id AS id, CONCAT(P.player_first_name, " ", P.player_last_name) AS playerName, tbl1.character_name AS characterName, R.race_name AS race, tbl2.class_name AS primaryClass, tbl1.Levels AS levels, tbl1.background AS background FROM (SELECT CH.character_id, CH.character_name, sum(CC.levels) AS Levels, CH.player_id, CH.race_id, CH.background FROM characters CH INNER JOIN characters_class CC ON CH.character_id = CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id GROUP BY CH.character_name) AS tbl1 INNER JOIN (SELECT CH.character_name, CL.class_name FROM characters CH INNER JOIN characters_class CC ON CH.character_id=CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id WHERE CC.primary_class = 1) AS tbl2 ON tbl1.character_name = tbl2.character_name INNER JOIN player P ON P.player_id = tbl1.player_id INNER JOIN race R on R.race_id = tbl1.race_id ORDER BY playerName ASC';
     mysql.pool.query(sql, function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.characters = results;
+        complete();
+    });
+}
+
+// List of characters sorted by Player
+function sortPlayer(req, res, mysql, context, complete) {
+    var sql = 'SELECT tbl1.character_id AS id, CONCAT(P.player_first_name, " ", P.player_last_name) AS playerName, tbl1.character_name AS characterName, R.race_name AS race, tbl2.class_name AS primaryClass, tbl1.Levels AS levels, tbl1.background AS background FROM (SELECT CH.character_id, CH.character_name, sum(CC.levels) AS Levels, CH.player_id, CH.race_id, CH.background FROM characters CH INNER JOIN characters_class CC ON CH.character_id = CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id GROUP BY CH.character_name) AS tbl1 INNER JOIN (SELECT CH.character_name, CL.class_name FROM characters CH INNER JOIN characters_class CC ON CH.character_id=CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id WHERE CC.primary_class = 1) AS tbl2 ON tbl1.character_name = tbl2.character_name INNER JOIN player P ON P.player_id = tbl1.player_id INNER JOIN race R on R.race_id = tbl1.race_id WHERE P.player_id = ? ORDER BY playerName ASC';
+    mysql.pool.query(sql, [req.params.id], function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.characters = results;
+        complete();
+    });
+}
+
+// List of characters sorted by Race
+function sortRace(req, res, mysql, context, complete) {
+    var sql = 'SELECT tbl1.character_id AS id, CONCAT(P.player_first_name, " ", P.player_last_name) AS playerName, tbl1.character_name AS characterName, R.race_name AS race, tbl2.class_name AS primaryClass, tbl1.Levels AS levels, tbl1.background AS background FROM (SELECT CH.character_id, CH.character_name, sum(CC.levels) AS Levels, CH.player_id, CH.race_id, CH.background FROM characters CH INNER JOIN characters_class CC ON CH.character_id = CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id GROUP BY CH.character_name) AS tbl1 INNER JOIN (SELECT CH.character_name, CL.class_name FROM characters CH INNER JOIN characters_class CC ON CH.character_id=CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id WHERE CC.primary_class = 1) AS tbl2 ON tbl1.character_name = tbl2.character_name INNER JOIN player P ON P.player_id = tbl1.player_id INNER JOIN race R on R.race_id = tbl1.race_id WHERE R.race_id = ? ORDER BY playerName ASC';
+    mysql.pool.query(sql, [req.params.id], function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        }
+        context.characters = results;
+        complete();
+    });
+}
+
+// List of characters sorted by Class
+function sortClass(req, res, mysql, context, complete) {
+    var sql = 'SELECT tbl1.character_id AS id, CONCAT(P.player_first_name, " ", P.player_last_name) AS playerName, tbl1.character_name AS characterName, R.race_name AS race, tbl2.class_name AS primaryClass, tbl1.Levels AS levels, tbl1.background AS background FROM (SELECT CH.character_id, CH.character_name, sum(CC.levels) AS Levels, CH.player_id, CH.race_id, CH.background FROM characters CH INNER JOIN characters_class CC ON CH.character_id = CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id GROUP BY CH.character_name) AS tbl1 INNER JOIN (SELECT CH.character_name, CL.class_name, CL.class_id FROM characters CH INNER JOIN characters_class CC ON CH.character_id=CC.character_id INNER JOIN class CL ON CL.class_id = CC.class_id WHERE CC.primary_class = 1) AS tbl2 ON tbl1.character_name = tbl2.character_name INNER JOIN player P ON P.player_id = tbl1.player_id INNER JOIN race R on R.race_id = tbl1.race_id WHERE tbl2.class_id = ? ORDER BY playerName ASC';
+    mysql.pool.query(sql, [req.params.id], function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
@@ -72,7 +111,7 @@ function getCharacters(res, mysql, context, complete) {
 
 // Single character for update page --> context.character
 function getUpdateChar(req, res, mysql, context, complete) {
-    sql = 'SELECT character_id AS characterId, player_id AS playerId, character_name AS characterName, race_id AS raceID, background AS background FROM characters WHERE character_id = ?';
+    sql = 'SELECT character_id AS characterId, player_id AS playerId, character_name AS characterName, race_id AS raceId, background AS background FROM characters WHERE character_id = ?';
     mysql.pool.query(sql, [req.params.id], function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error));
@@ -95,6 +134,61 @@ router.get('/', function (req, res) {
     getRaces(res, mysql, context, complete);
     getClasses(res, mysql, context, complete);
     getCharacters(res, mysql, context, complete);
+
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 4) {
+            res.render('manageCharacters', context);
+        }
+    }
+});
+
+//sort characters
+router.get('/player/:id', function (req, res) {
+    var mysql = req.app.get('mysql');
+    var callbackCount = 0;
+    var context = {};
+    getPlayers(res, mysql, context, complete);
+    getRaces(res, mysql, context, complete);
+    getClasses(res, mysql, context, complete);
+    sortPlayer(req, res, mysql, context, complete);
+
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 4) {
+            res.render('manageCharacters', context);
+        }
+    }
+});
+
+router.get('/race/:id', function (req, res) {
+    var mysql = req.app.get('mysql');
+    var callbackCount = 0;
+    var context = {};
+    getPlayers(res, mysql, context, complete);
+    getRaces(res, mysql, context, complete);
+    getClasses(res, mysql, context, complete);
+    sortRace(req, res, mysql, context, complete);
+
+
+    function complete() {
+        callbackCount++;
+        if (callbackCount >= 4) {
+            res.render('manageCharacters', context);
+        }
+    }
+});
+
+router.get('/class/:id', function (req, res) {
+    var mysql = req.app.get('mysql');
+    var callbackCount = 0;
+    var context = {};
+    getPlayers(res, mysql, context, complete);
+    getRaces(res, mysql, context, complete);
+    getClasses(res, mysql, context, complete);
+    sortClass(req, res, mysql, context, complete);
 
 
     function complete() {

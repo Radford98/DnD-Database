@@ -89,13 +89,27 @@ router.post('/', function (req, res) {
     var context = {};
     var mysql = req.app.get('mysql');
     var sql = 'INSERT INTO player (player_first_name, player_last_name, dm) VALUES (?, ?, ?)';
+    if (req.body.dm_select == '') { req.body.dm_select = null;}     // Convert empty string to null if 'self' was selected as dm
     var inserts = [req.body.first_name, req.body.last_name, req.body.dm_select];
     mysql.pool.query(sql, inserts, function (error, results, fields) {
         if (error) {
             res.write(JSON.stringify(error));
             res.end();
         } else {
-            res.redirect('/managePlayers');
+            if (req.body.dm_select == null) { // If self was selected as dm, need to update the dm field.
+                sql = 'UPDATE player SET dm = ? WHERE player_id = ?';
+                inserts = [results.insertId, results.insertId];
+                mysql.pool.query(sql, inserts, function (error, results, fields) {
+                    if (error) {
+                        res.write(JSON.stringify(error));
+                        res.end();
+                    } else {
+                        res.redirect('/managePlayers');
+                    }
+                });
+            } else {
+                res.redirect('/managePlayers');
+            }
         }
     });
 });

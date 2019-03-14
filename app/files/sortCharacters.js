@@ -9,10 +9,23 @@ $(document).ready(() => {
 
     $('#sortPlayer').change(function (event) {
         if ($(this).val() != '') {
-            $.ajax({
-                url: '/manageCharacters/player/' + $(this).val(),
-                type: 'GET'
-            })
+            window.location.href = 'manageCharacters/player/' + $(this).val();
         }
+    });
+
+    $('#sortRace').change(function (event) {
+        if ($(this).val() != '') {
+            window.location.href = 'manageCharacters/race/' + $(this).val();
+        }
+    });
+
+    $('#sortClass').change(function (event) {
+        if ($(this).val() != '') {
+            window.location.href = 'manageCharacters/class/' + $(this).val();
+        }
+    });
+
+    $('#displayAll').click(() => {
+        window.location.href = '/manageCharacters';
     });
 });

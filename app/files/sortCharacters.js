@@ -9,19 +9,19 @@ $(document).ready(() => {
 
     $('#sortPlayer').change(function (event) {
         if ($(this).val() != '') {
-            window.location.href = 'manageCharacters/player/' + $(this).val();
+            window.location.href = '/manageCharacters/player/' + $(this).val();
         }
     });
 
     $('#sortRace').change(function (event) {
         if ($(this).val() != '') {
-            window.location.href = 'manageCharacters/race/' + $(this).val();
+            window.location.href = '/manageCharacters/race/' + $(this).val();
         }
     });
 
     $('#sortClass').change(function (event) {
         if ($(this).val() != '') {
-            window.location.href = 'manageCharacters/class/' + $(this).val();
+            window.location.href = '/manageCharacters/class/' + $(this).val();
         }
     });
 

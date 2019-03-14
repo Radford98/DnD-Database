@@ -72,7 +72,7 @@ function getCharacters(res, mysql, context, complete) {
 
 // Single character for update page --> context.character
 function getUpdateChar(req, res, mysql, context, complete) {
-    sql = 'SELECT character_id AS characterId, player_id AS playerId, character_name AS characterName, race_id AS raceID, background AS background FROM characters WHERE character_id = ?';
+    sql = 'SELECT character_id AS characterId, player_id AS playerId, character_name AS characterName, race_id AS raceId, background AS background FROM characters WHERE character_id = ?';
     mysql.pool.query(sql, [req.params.id], function (error, results, fields) {
         if (error) {
             console.log(JSON.stringify(error));

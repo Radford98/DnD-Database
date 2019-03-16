@@ -298,12 +298,24 @@ router.put('/:id', function (req, res) {
                                 primary = '1';
                                 primeCheck = 1;
                             }
-                            var inserts = [req.body.class_level[index], primary, req.params.id, element];
+                            let inserts = [req.body.class_level[index], primary, req.params.id, element];
                             mysql.pool.query(sql, inserts, function(error, results, fields){
                                 if (error) {
                                     console.log(JSON.stringify(error));
                                     res.write(JSON.stringify(error));
                                     res.end();
+                                } else {    // If a class's level was changed to 0, remove from M:M table.
+                                    if (req.body.class_level[index] == 0) {
+                                        let sql = 'DELETE FROM characters_class WHERE character_id = ? AND class_id = ?';
+                                        let inserts = [req.params.id, element];
+                                        mysql.pool.query(sql, inserts, function (error) {
+                                            if (error) {
+                                                console.log(JSON.stringify(error));
+                                                res.write(JSON.stringify(error));
+                                                res.end();
+                                            }
+                                        });
+                                    }
                                 }
                             });
                        });

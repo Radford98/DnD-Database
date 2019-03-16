@@ -78,10 +78,60 @@ router.get('/:id', function (req, res) {
     function complete() {
         callbackCount++;
         if (callbackCount >= 2) {
+            // Remove the current player from the DM list if needed to avoid
+            // duplication with "self" designator in the list
+            context.dms = context.dms.filter(function (dm) {
+                return dm.dmId !== context.player.player_id;
+            });
             res.render('updatePlayer', context);
         }
     }
 
+});
+
+// Change a player's assigned DM
+
+router.post('/:player_id', function (req, res) {
+    var context = {};
+    var mysql = req.app.get('mysql');
+    var sql = 'UPDATE player SET dm = ? WHERE player_id = ?';
+    if (req.body.dm_select == '') {
+        req.body.dm_select = req.params.player_id;
+    }
+    var inserts = [req.body.dm_select, req.params.player_id];
+    mysql.pool.query(sql, inserts, function(error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            res.redirect('/managePlayers/' + req.params.player_id);
+        }
+    });
+});
+
+// Commit updates to the DB
+router.put('/:player_id', function (req, res) {
+    var mysql = req.app.get('mysql');
+    let sql = 'SELECT player_id, player_first_name, player_last_name, dm FROM player WHERE player_id = ?';
+    mysql.pool.query(sql, [req.params.player_id], function (error, results, fields) {
+        if (error) {
+            res.write(JSON.stringify(error));
+            res.end();
+        } else {
+            var current = results[0];
+            let sql = 'UPDATE player SET player_first_name = ?, player_last_name = ?, dm = ? WHERE player_id = ?';
+            var inserts = [req.body.player_first_name || current.player_first_name, req.body.player_last_name || current.player_last_name, req.body.dm || current.dm, req.params.player_id];
+            mysql.pool.query(sql, inserts, function (error, results, fields) {
+                if (error) {
+                    res.write(JSON.stringify(error));
+                    res.end();
+                } else {
+                    res.status(200);
+                    res.end();
+                }
+            });
+        }
+    });
 });
 
 // Add a new player to the db

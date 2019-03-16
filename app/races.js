@@ -172,16 +172,20 @@ router.post('/', function (req, res) {
             res.write(JSON.stringify(error));
             res.end();
         } else {
-            sql = 'INSERT INTO race_special (race_id, special_id) VALUES (?, ?)';
-            inserts = [results.insertId, req.body.special_select];
-            mysql.pool.query(sql, inserts, function (error, results, fields) {
-                if (error) {
-                    res.write(JSON.stringify(error));
-                    res.end();
-                } else {
-                    res.redirect('/manageRaces');
-                }
-            });
+            if (req.body.special_select != "") {
+                sql = 'INSERT INTO race_special (race_id, special_id) VALUES (?, ?)';
+                inserts = [results.insertId, req.body.special_select];
+                mysql.pool.query(sql, inserts, function (error, results, fields) {
+                    if (error) {
+                        res.write(JSON.stringify(error));
+                        res.end();
+                    } else {
+                        res.redirect('/manageRaces');
+                    }
+                });
+            } else {
+                res.redirect('/manageRaces');
+            }
         }
     });
 

@@ -33,9 +33,8 @@ function getRaces(res, mysql, context, complete) {
                     }
                 });
             });
-
+            complete();
         });
-        complete();
     });
 }
 
@@ -73,9 +72,8 @@ function getUpdateRace(req, res, mysql, context, complete) {
                     context.race.raceSpecials.push(special.special_name);
                 }
             });
+            complete();
         });
-
-        complete();
     });
 }
 
